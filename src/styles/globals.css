@@ -1,0 +1,31 @@
+@import './space-theme.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-space-bg text-slate-light font-sans antialiased selection:bg-cosmic-blue/30 selection:text-white;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .glow-blue {
+    box-shadow: 0 0 25px -5px rgba(54, 120, 229, 0.4);
+  }
+
+  .glow-violet {
+    box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.4);
+  }
+
+  .border-glass {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+}

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <radialGradient id="planet" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="50%" stop-color="#3678E5" />
+      <stop offset="100%" stop-color="#1E1B4B" />
+    </radialGradient>
+    <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C084FC" />
+      <stop offset="100%" stop-color="#3678E5" />
+    </linearGradient>
+  </defs>
+  <!-- Cosmic Backdrop -->
+  <circle cx="32" cy="32" r="30" fill="#080B16" />
+  <!-- Orbital Ring Behind -->
+  <ellipse cx="32" cy="32" rx="26" ry="9" fill="none" stroke="url(#ring)" stroke-width="2.5" opacity="0.4" transform="rotate(-25 32 32)" />
+  <!-- Celestial Body -->
+  <circle cx="32" cy="32" r="16" fill="url(#planet)" />
+  <!-- Atmosphere Rim -->
+  <circle cx="32" cy="32" r="16" fill="none" stroke="#8B5CF6" stroke-width="1.5" opacity="0.8" />
+  <!-- Orbital Ring Front -->
+  <path d="M 8 36 A 26 9 0 0 0 55 27" fill="none" stroke="url(#ring)" stroke-width="2.5" transform="rotate(-25 32 32)" />
+</svg>

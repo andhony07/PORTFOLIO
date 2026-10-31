@@ -1,0 +1,62 @@
+{
+  "manifestVersion": "1.0.0",
+  "description": "Asset manifest mapping verified credentials to pending high-resolution individual certificate captures.",
+  "certificates": [
+    {
+      "id": "aws-bedrock",
+      "title": "Prompt Engineering Best Practices for Amazon Bedrock Models",
+      "issuer": "Amazon Web Services (AWS)",
+      "assetStatus": "pending_upload",
+      "imagePath": null,
+      "placeholderType": "vector_hologram"
+    },
+    {
+      "id": "vista-forage-ai",
+      "title": "AI in Action Job Simulation",
+      "issuer": "Vista / Forage",
+      "assetStatus": "pending_upload",
+      "imagePath": null,
+      "placeholderType": "vector_hologram"
+    },
+    {
+      "id": "tata-forage-genai",
+      "title": "GenAI Powered Data Analytics Job Simulation",
+      "issuer": "Tata / Forage",
+      "assetStatus": "pending_upload",
+      "imagePath": null,
+      "placeholderType": "vector_hologram"
+    },
+    {
+      "id": "deloitte-data-analytics",
+      "title": "Data Analytics Job Simulation",
+      "issuer": "Deloitte",
+      "assetStatus": "pending_upload",
+      "imagePath": null,
+      "placeholderType": "vector_hologram"
+    },
+    {
+      "id": "deloitte-technology",
+      "title": "Technology Job Simulation",
+      "issuer": "Deloitte",
+      "assetStatus": "pending_upload",
+      "imagePath": null,
+      "placeholderType": "vector_hologram"
+    },
+    {
+      "id": "hackerrank-python",
+      "title": "Python (Basic)",
+      "issuer": "HackerRank",
+      "assetStatus": "pending_upload",
+      "imagePath": null,
+      "placeholderType": "vector_hologram"
+    },
+    {
+      "id": "nptel-java",
+      "title": "Programming in Java (Score: 88%)",
+      "issuer": "NPTEL",
+      "assetStatus": "pending_upload",
+      "imagePath": null,
+      "placeholderType": "vector_hologram"
+    }
+  ]
+}

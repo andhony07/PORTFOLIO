@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://andhony07.github.io/sitemap.xml

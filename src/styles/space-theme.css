@@ -1,0 +1,65 @@
+:root {
+  --space-bg: #080B16;
+  --space-deep: #04060B;
+  --primary-blue: #3678E5;
+  --accent-violet: #8B5CF6;
+  --text-light: #F8FAFC;
+  --text-muted: #94A3B8;
+  --glass-bg: rgba(13, 19, 36, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #080B16;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(54, 120, 229, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.5);
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-hover:hover {
+  border-color: rgba(54, 120, 229, 0.35);
+  box-shadow: 0 10px 30px -10px rgba(54, 120, 229, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Cosmic Gradient Text */
+.text-gradient-cosmic {
+  background: linear-gradient(135deg, #F8FAFC 20%, #93C5FD 50%, #C4B5FD 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(135deg, #38BDF8 0%, #3678E5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-violet {
+  background: linear-gradient(135deg, #C084FC 0%, #8B5CF6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
