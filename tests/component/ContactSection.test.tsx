@@ -6,7 +6,7 @@ describe('ContactSection Component', () => {
   it('displays verified email address and location', () => {
     render(<ContactSection />);
     expect(screen.getByText('andhony78@gmail.com')).toBeInTheDocument();
-    expect(screen.getByText(/Coimbatore, Tamil Nadu, India/i)).toBeInTheDocument();
+    expect(screen.getByText(/Tiruppur, Tamil Nadu, India/i)).toBeInTheDocument();
   });
 
   it('triggers clipboard copy when Copy Email button is clicked', () => {

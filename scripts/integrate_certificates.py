@@ -68,3 +68,4 @@ for orig_base, (cid, target_img, target_pdf) in mapping.items():
     print(f"[SAVED] {target_img} ({size_kb:.1f} KB) & {target_pdf}")
 
 print("All assets successfully integrated into public/assets/certificates/")
+

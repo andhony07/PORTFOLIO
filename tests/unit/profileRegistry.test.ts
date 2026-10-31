@@ -15,8 +15,9 @@ describe('Developer Profile Registry Validation', () => {
     expect(developerProfile.education.location).toContain('Coimbatore');
   });
 
-  it('must verify resume is flagged as unavailable without dummy links', () => {
-    expect(developerProfile.socials.resumeAvailable).toBe(false);
+  it('must verify resume is available with published PDF', () => {
+    expect(developerProfile.socials.resumeAvailable).toBe(true);
+    expect(developerProfile.location).toBe('Tiruppur, Tamil Nadu, India');
   });
 
   it('must provide verified public contact links', () => {

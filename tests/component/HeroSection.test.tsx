@@ -23,7 +23,7 @@ describe('HeroSection Component with GSAP Choreography', () => {
     expect(contactLink).toHaveAttribute('href', '#contact');
   });
 
-  it('provides functional resume button and opens graceful unavailable modal', () => {
+  it('provides functional resume button and opens verified resume modal with View and Download actions', () => {
     const TestComponent = () => {
       const { isResumeModalOpen, closeResumeModal } = usePortfolioStore();
       return (
@@ -41,8 +41,17 @@ describe('HeroSection Component with GSAP Choreography', () => {
 
     fireEvent.click(resumeBtn);
 
-    expect(screen.getByText(/Resume Under Final Review/i)).toBeInTheDocument();
+    expect(screen.getByText(/Resume Available/i)).toBeInTheDocument();
     expect(screen.getByText(/Placement & Career Opportunity Notice/i)).toBeInTheDocument();
+    expect(screen.getByText(/My latest resume is available here/i)).toBeInTheDocument();
+
+    const viewResumeLink = screen.getByRole('link', { name: /View Resume/i });
+    expect(viewResumeLink).toHaveAttribute('href', '/resume/Andhony_Saviyar_S_Resume.pdf');
+    expect(viewResumeLink).toHaveAttribute('target', '_blank');
+
+    const downloadResumeLink = screen.getByRole('link', { name: /Download Resume/i });
+    expect(downloadResumeLink).toHaveAttribute('href', '/resume/Andhony_Saviyar_S_Resume.pdf');
+    expect(downloadResumeLink).toHaveAttribute('download', 'Andhony_Saviyar_S_Resume.pdf');
 
     const copyEmailBtn = screen.getByRole('button', { name: /Copy Email Address/i });
     expect(copyEmailBtn).toBeInTheDocument();

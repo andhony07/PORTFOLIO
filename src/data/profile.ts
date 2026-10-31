@@ -8,12 +8,12 @@ export const developerProfile: DeveloperProfile = {
     institution: "Sri Shakthi Institute of Engineering and Technology",
     location: "Coimbatore, Tamil Nadu, India",
   },
-  location: "Coimbatore, Tamil Nadu, India",
+  location: "Tiruppur, Tamil Nadu, India",
   socials: {
     github: "https://github.com/andhony07",
     linkedin: "https://www.linkedin.com/in/andhony-saviyar-s-ba2a9a3b7",
     email: "andhony78@gmail.com",
-    resumeAvailable: false, // Resume is pending updated placement version
+    resumeAvailable: true,
   },
   bio: [
     "Computer Science Engineer specializing in full-stack architecture, intelligent server monitoring, and cloud-native observability systems.",

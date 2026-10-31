@@ -282,13 +282,13 @@ export const Navbar: React.FC = () => {
               onClick={handleResumeClick}
               className="w-full text-xs font-mono justify-center border-cosmic-blue/40"
             >
-              Review Resume Status
+              Resume
             </Button>
 
             <div className="flex items-center justify-between text-xs text-slate-muted pt-1">
               <div className="flex items-center gap-1.5 text-[11px] text-slate-dim font-mono">
                 <MapPin className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Coimbatore, TN</span>
+                <span>Tiruppur, TN</span>
               </div>
 
               <div className="flex items-center gap-2">
