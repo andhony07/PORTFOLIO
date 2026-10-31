@@ -67,3 +67,4 @@ export const AchievementsSection: React.FC = () => {
     </section>
   );
 };
+

@@ -36,3 +36,4 @@ export const GlassPanel: React.FC<GlassPanelProps> = ({
     </div>
   );
 };
+

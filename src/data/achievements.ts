@@ -59,3 +59,4 @@ export const achievementsRegistry: Achievement[] = [
     tags: ["Institutional Hackathon", "Team Collaboration", "Software Engineering"]
   }
 ];
+

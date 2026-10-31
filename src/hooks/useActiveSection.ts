@@ -29,3 +29,4 @@ export function useActiveSection() {
     return () => observer.disconnect();
   }, [setActiveSection]);
 }
+

@@ -27,3 +27,4 @@ describe('Certifications Registry Integrity', () => {
     });
   });
 });
+

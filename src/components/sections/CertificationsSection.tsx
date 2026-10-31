@@ -137,3 +137,4 @@ export const CertificationsSection: React.FC = () => {
     </section>
   );
 };
+

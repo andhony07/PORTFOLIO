@@ -28,3 +28,4 @@ export const workshopsRegistry: Workshop[] = [
     topics: ["AI Productivity Tools", "Generative AI", "Workflow Automation", "Prompt Engineering"]
   }
 ];
+

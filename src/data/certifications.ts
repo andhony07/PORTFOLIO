@@ -66,3 +66,4 @@ export const certificationsRegistry: Certification[] = [
     status: "completed"
   }
 ];
+

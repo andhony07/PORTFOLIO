@@ -43,3 +43,4 @@ export const skillsRegistry: SkillItem[] = [
   { name: "Playwright E2E", category: "Databases & Tools", level: "Proficient" },
   { name: "Postman", category: "Databases & Tools", level: "Proficient" }
 ];
+

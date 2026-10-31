@@ -43,3 +43,4 @@ export const Linkedin: React.FC<IconProps> = ({ className = 'w-5 h-5', size = 20
     <circle cx="4" cy="4" r="2" />
   </svg>
 );
+

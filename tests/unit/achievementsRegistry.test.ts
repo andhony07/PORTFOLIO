@@ -26,3 +26,4 @@ describe('Achievements & Hackathons Registry Integrity', () => {
     });
   });
 });
+

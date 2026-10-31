@@ -39,3 +39,4 @@ export const usePortfolioStore = create<PortfolioState>((set) => ({
   performanceMode: 'high',
   setPerformanceMode: (mode) => set({ performanceMode: mode }),
 }));
+

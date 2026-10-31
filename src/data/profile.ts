@@ -27,3 +27,4 @@ export const developerProfile: DeveloperProfile = {
     "DevOps Automation & Containerization"
   ]
 };
+

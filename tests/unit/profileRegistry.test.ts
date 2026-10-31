@@ -25,3 +25,4 @@ describe('Developer Profile Registry Validation', () => {
     expect(developerProfile.socials.email).toBe('andhony78@gmail.com');
   });
 });
+
