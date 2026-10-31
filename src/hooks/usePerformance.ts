@@ -21,3 +21,4 @@ export const PerformanceContext = createContext<PerformanceConfig>({
 });
 
 export const usePerformance = () => useContext(PerformanceContext);
+

@@ -6,7 +6,7 @@ import { internshipsRegistry, workshopsRegistry } from '../../data/experience';
 
 export const ExperienceSection: React.FC = () => {
   return (
-    <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
       <SectionHeader
         tag="Industry &amp; Applied Training"
         title="Internships &amp; Technical Workshops"

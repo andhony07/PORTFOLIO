@@ -11,7 +11,7 @@ export const CertificationsSection: React.FC = () => {
   const [activeCert, setActiveCert] = useState<Certification | null>(null);
 
   return (
-    <section id="certifications" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="certifications" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
       <SectionHeader
         tag="Certification Galaxy"
         title="Verified Technical Credentials"

@@ -29,3 +29,4 @@ describe('WebGL Detection and Graceful CSS Fallback', () => {
     vi.restoreAllMocks();
   });
 });
+

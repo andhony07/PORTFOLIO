@@ -3,10 +3,14 @@ import { StarField } from './StarField';
 import { Planet } from './Planet';
 import { OrbitalRings } from './OrbitalRings';
 import { FloatingObjects } from './FloatingObjects';
+import { CameraController } from './CameraController';
 
 export const SpaceScene: React.FC = () => {
   return (
     <>
+      {/* Interactive Damped Parallax & Entrance Camera Controller */}
+      <CameraController />
+
       {/* Cinematic Deep Space Lighting */}
       {/* 1. Key Stellar Sun Light: Crisp white directional light */}
       <directionalLight
@@ -44,3 +48,4 @@ export const SpaceScene: React.FC = () => {
     </>
   );
 };
+

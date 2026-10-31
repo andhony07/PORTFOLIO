@@ -6,7 +6,7 @@ import { developerProfile } from '../../data/profile';
 
 export const AboutSection: React.FC = () => {
   return (
-    <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
       <SectionHeader
         tag="Profile & Background"
         title="Engineering Mindset & Foundations"

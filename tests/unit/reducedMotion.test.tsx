@@ -35,3 +35,4 @@ describe('useReducedMotion Hook', () => {
     expect(result.current).toBe(true);
   });
 });
+
