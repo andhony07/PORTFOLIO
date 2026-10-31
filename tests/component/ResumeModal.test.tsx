@@ -68,3 +68,4 @@ describe('ResumeModal Component', () => {
     expect(screen.getByText(/Tiruppur, Tamil Nadu, India/i)).toBeInTheDocument();
   });
 });
+
