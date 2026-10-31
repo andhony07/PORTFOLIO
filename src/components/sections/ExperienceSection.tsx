@@ -1,17 +1,74 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SectionHeader } from '../common/SectionHeader';
 import { GlassPanel } from '../common/GlassPanel';
 import { Badge } from '../common/Badge';
 import { Briefcase, BookOpen, Clock, CheckCircle, ShieldCheck } from 'lucide-react';
 import { internshipsRegistry, workshopsRegistry } from '../../data/experience';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export const ExperienceSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      const isHeadless = typeof window !== 'undefined' && window.navigator.userAgent.includes('jsdom');
+      if (reducedMotion || isHeadless) {
+        gsap.set(['.experience-header', '.internship-card', '.workshop-card'], {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        });
+        return;
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          once: true,
+        },
+        defaults: { ease: 'power3.out' },
+      });
+
+      tl.fromTo('.experience-header', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.65 })
+        .fromTo(
+          '.internship-card',
+          { opacity: 0, y: 24, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.1 },
+          '-=0.35'
+        )
+        .fromTo(
+          '.workshop-card',
+          { opacity: 0, y: 24, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.1 },
+          '-=0.35'
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
+
   return (
-    <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
+    <section
+      ref={sectionRef}
+      id="experience"
+      className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+    >
       <SectionHeader
-        tag="Industry &amp; Applied Training"
-        title="Internships &amp; Technical Workshops"
+        tag="Industry & Applied Training"
+        title="Internships & Technical Workshops"
         subtitle="Practical engineering internships and structured technical workshops developing real-world software foundations."
+        className="experience-header"
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -29,7 +86,7 @@ export const ExperienceSection: React.FC = () => {
 
           <div className="space-y-6">
             {internshipsRegistry.map((item) => (
-              <GlassPanel key={item.id} hoverGlow className="p-6 space-y-3">
+              <GlassPanel key={item.id} hoverGlow className="internship-card p-6 space-y-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                   <div>
                     <h4 className="text-lg font-bold text-white">{item.role}</h4>
@@ -65,7 +122,7 @@ export const ExperienceSection: React.FC = () => {
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-cosmic-violet" />
-              <h3 className="text-xl font-bold text-white">Workshops &amp; Learning</h3>
+              <h3 className="text-xl font-bold text-white">Workshops & Learning</h3>
             </div>
             <span className="text-xs font-mono text-slate-dim">
               Skill Acceleration
@@ -74,7 +131,7 @@ export const ExperienceSection: React.FC = () => {
 
           <div className="space-y-6">
             {workshopsRegistry.map((workshop) => (
-              <GlassPanel key={workshop.id} hoverGlow glowColor="violet" className="p-6 space-y-3">
+              <GlassPanel key={workshop.id} hoverGlow glowColor="violet" className="workshop-card p-6 space-y-3">
                 <div className="flex items-start justify-between gap-2">
                   <h4 className="text-base font-bold text-white">{workshop.title}</h4>
                   <span className="text-xs font-mono text-cosmic-violet font-semibold bg-cosmic-violet/10 px-2.5 py-0.5 rounded-full border border-cosmic-violet/30">
@@ -102,18 +159,13 @@ export const ExperienceSection: React.FC = () => {
                     ))}
                   </div>
                 </div>
+
+                <div className="pt-2 flex items-center gap-1.5 text-[11px] text-slate-dim font-mono border-t border-white/5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-cosmic-blue" />
+                  <span>Interactive workshop completion</span>
+                </div>
               </GlassPanel>
             ))}
-
-            <GlassPanel className="p-5 bg-gradient-to-br from-space-surface to-cosmic-blue/5 border-cosmic-blue/20">
-              <div className="flex items-center gap-2 text-cosmic-blue mb-2 font-mono text-xs uppercase tracking-wider font-semibold">
-                <ShieldCheck className="w-4 h-4" />
-                <span>Zero Fabrication Policy</span>
-              </div>
-              <p className="text-xs text-slate-muted leading-relaxed">
-                All records, codebases, and credentials represent genuine student coursework, submitted hackathon projects, and tested repositories without inflated metrics or unverifiable employment claims.
-              </p>
-            </GlassPanel>
           </div>
         </div>
       </div>

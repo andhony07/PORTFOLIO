@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { ResumeModal } from '../common/ResumeModal';
 import { SpaceCanvas } from '../3d/SpaceCanvas';
 import { usePortfolioStore } from '../../store/usePortfolioStore';
+import { initScrollProgressSync } from '../../utils/scrollState';
 
 export interface SpaceLayoutProps {
   children: React.ReactNode;
@@ -11,6 +12,12 @@ export interface SpaceLayoutProps {
 
 export const SpaceLayout: React.FC<SpaceLayoutProps> = ({ children }) => {
   const { isResumeModalOpen, closeResumeModal } = usePortfolioStore();
+
+  // Initialize global scroll synchronization for camera waypoints and animations
+  useEffect(() => {
+    const cleanupScroll = initScrollProgressSync();
+    return () => cleanupScroll();
+  }, []);
 
   return (
     <div className="relative min-h-screen bg-space-bg text-slate-light selection:bg-cosmic-blue/30 selection:text-white flex flex-col">

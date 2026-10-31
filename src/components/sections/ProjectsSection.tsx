@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SectionHeader } from '../common/SectionHeader';
 import { GlassPanel } from '../common/GlassPanel';
 import { Badge } from '../common/Badge';
@@ -8,8 +8,17 @@ import { ExternalLink, ShieldCheck, CheckCircle2, Info } from 'lucide-react';
 import { Github } from '../common/Icons';
 import { projectsRegistry } from '../../data/projects';
 import { Project, ProjectCategory } from '../../types/portfolio';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export const ProjectsSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
   const [activeFilter, setActiveFilter] = useState<'all' | 'featured' | ProjectCategory>('all');
   const [inspectedProject, setInspectedProject] = useState<Project | null>(null);
 
@@ -28,16 +37,72 @@ export const ProjectsSection: React.FC = () => {
     { id: 'fullstack', label: 'Full Stack' },
   ];
 
+  // ScrollTrigger entrance choreography
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      const isHeadless = typeof window !== 'undefined' && window.navigator.userAgent.includes('jsdom');
+      if (reducedMotion || isHeadless) {
+        gsap.set(['.projects-header', '.projects-filters', '.project-card'], {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        });
+        return;
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          once: true,
+        },
+        defaults: { ease: 'power3.out' },
+      });
+
+      tl.fromTo('.projects-header', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.65 })
+        .fromTo('.projects-filters', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.35')
+        .fromTo(
+          '.project-card',
+          { opacity: 0, y: 28, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.08 },
+          '-=0.3'
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
+
+  // Subtle restagger when filter tab changes
+  useEffect(() => {
+    if (reducedMotion) return;
+    const isHeadless = typeof window !== 'undefined' && window.navigator.userAgent.includes('jsdom');
+    if (isHeadless) return;
+
+    gsap.fromTo(
+      '.project-card',
+      { opacity: 0, y: 14 },
+      { opacity: 1, y: 0, duration: 0.35, stagger: 0.04, ease: 'power2.out' }
+    );
+  }, [activeFilter, reducedMotion]);
+
   return (
-    <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
+    <section
+      ref={sectionRef}
+      id="projects"
+      className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+    >
       <SectionHeader
         tag="Project Constellation"
-        title="Engineered Systems &amp; Applications"
+        title="Engineered Systems & Applications"
         subtitle="Audited repository portfolio spanning server observability, desktop storage intelligence, distributed architectures, and AI applications."
+        className="projects-header"
       />
 
       {/* Filter Tabs */}
-      <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
+      <div className="projects-filters flex flex-wrap items-center justify-center gap-2 mb-12">
         {filterButtons.map((tab) => (
           <button
             key={tab.id}
@@ -60,7 +125,7 @@ export const ProjectsSection: React.FC = () => {
             key={project.id}
             hoverGlow
             glowColor={project.featured ? 'blue' : 'none'}
-            className="flex flex-col justify-between group border-white/10 hover:border-cosmic-blue/40"
+            className="project-card flex flex-col justify-between group border-white/10 hover:border-cosmic-blue/40"
           >
             <div className="space-y-4">
               {/* Card Header with Status & Category */}
@@ -99,7 +164,7 @@ export const ProjectsSection: React.FC = () => {
                       key={idx}
                       className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-light font-mono"
                     >
-                      <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                       <span>{m.label}: <strong>{m.value}</strong></span>
                     </span>
                   ))}

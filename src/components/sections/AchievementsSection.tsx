@@ -1,21 +1,73 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SectionHeader } from '../common/SectionHeader';
 import { GlassPanel } from '../common/GlassPanel';
 import { Badge } from '../common/Badge';
 import { Trophy, Calendar, CheckCircle2 } from 'lucide-react';
 import { achievementsRegistry } from '../../data/achievements';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export const AchievementsSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      const isHeadless = typeof window !== 'undefined' && window.navigator.userAgent.includes('jsdom');
+      if (reducedMotion || isHeadless) {
+        gsap.set(['.achievements-header', '.achievements-legend', '.achievement-timeline-item'], {
+          opacity: 1,
+          x: 0,
+          y: 0,
+        });
+        return;
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          once: true,
+        },
+        defaults: { ease: 'power3.out' },
+      });
+
+      tl.fromTo('.achievements-header', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.65 })
+        .fromTo('.achievements-legend', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.35')
+        .fromTo(
+          '.achievement-timeline-item',
+          { opacity: 0, x: -24 },
+          { opacity: 1, x: 0, duration: 0.55, stagger: 0.12 },
+          '-=0.3'
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
+
   return (
-    <section id="achievements" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
+    <section
+      ref={sectionRef}
+      id="achievements"
+      className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+    >
       <SectionHeader
         tag="Engineering Challenges"
-        title="Hackathons &amp; Achievements"
+        title="Hackathons & Achievements"
         subtitle="Chronological record of participation across competitive 24-hour hackathons, algorithmic engineering challenges, and open-source initiatives."
+        className="achievements-header"
       />
 
       {/* Verification Status Legend */}
-      <div className="flex flex-wrap items-center justify-center gap-4 mb-10 text-xs font-mono text-slate-muted">
+      <div className="achievements-legend flex flex-wrap items-center justify-center gap-4 mb-10 text-xs font-mono text-slate-muted">
         <span className="text-slate-dim">Status Legend:</span>
         <div className="flex items-center gap-1.5">
           <Badge status="submitted" size="sm" dot>
@@ -39,7 +91,7 @@ export const AchievementsSection: React.FC = () => {
 
       <div className="relative border-l border-white/10 ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-8">
         {achievementsRegistry.map((item) => (
-          <div key={item.id} className="relative group">
+          <div key={item.id} className="achievement-timeline-item relative group">
             {/* Timeline Marker Node */}
             <div className="absolute -left-[31px] sm:-left-[47px] top-1.5 w-4 h-4 rounded-full bg-space-bg border-2 border-cosmic-blue group-hover:border-cosmic-violet transition-colors flex items-center justify-center">
               <span className="w-1.5 h-1.5 rounded-full bg-cosmic-blue group-hover:bg-cosmic-violet" />

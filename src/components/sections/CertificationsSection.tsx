@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SectionHeader } from '../common/SectionHeader';
 import { GlassPanel } from '../common/GlassPanel';
 import { Badge } from '../common/Badge';
@@ -6,16 +6,66 @@ import { Modal } from '../common/Modal';
 import { Award, CheckCircle2, ShieldAlert, FileImage } from 'lucide-react';
 import { certificationsRegistry } from '../../data/certifications';
 import { Certification } from '../../types/portfolio';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export const CertificationsSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
   const [activeCert, setActiveCert] = useState<Certification | null>(null);
 
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      const isHeadless = typeof window !== 'undefined' && window.navigator.userAgent.includes('jsdom');
+      if (reducedMotion || isHeadless) {
+        gsap.set(['.cert-header', '.cert-card'], {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        });
+        return;
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          once: true,
+        },
+        defaults: { ease: 'power3.out' },
+      });
+
+      tl.fromTo('.cert-header', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.65 })
+        .fromTo(
+          '.cert-card',
+          { opacity: 0, y: 28, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.08 },
+          '-=0.3'
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
+
   return (
-    <section id="certifications" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
+    <section
+      ref={sectionRef}
+      id="certifications"
+      className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+    >
       <SectionHeader
         tag="Certification Galaxy"
         title="Verified Technical Credentials"
         subtitle="Professional certificates and industry job simulations across cloud architectures, generative AI, enterprise analytics, and core algorithms."
+        className="cert-header"
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -25,7 +75,7 @@ export const CertificationsSection: React.FC = () => {
             hoverGlow
             glowColor="violet"
             onClick={() => setActiveCert(cert)}
-            className="cursor-pointer group flex flex-col justify-between"
+            className="cert-card cursor-pointer group flex flex-col justify-between"
           >
             <div className="space-y-4">
               {/* Card Header & Issuer */}

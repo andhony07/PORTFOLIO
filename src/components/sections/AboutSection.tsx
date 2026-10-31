@@ -1,22 +1,80 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SectionHeader } from '../common/SectionHeader';
 import { GlassPanel } from '../common/GlassPanel';
 import { GraduationCap, MapPin, Code2, Server, Cpu } from 'lucide-react';
 import { developerProfile } from '../../data/profile';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export const AboutSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      const isHeadless = typeof window !== 'undefined' && window.navigator.userAgent.includes('jsdom');
+      if (reducedMotion || isHeadless) {
+        gsap.set(
+          ['.about-header', '.about-bio', '.about-focus-card', '.about-education', '.about-availability'],
+          { opacity: 1, y: 0, scale: 1 }
+        );
+        return;
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          once: true,
+        },
+        defaults: { ease: 'power3.out' },
+      });
+
+      tl.fromTo('.about-header', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.65 })
+        .fromTo('.about-bio', { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.65 }, '-=0.4')
+        .fromTo(
+          '.about-focus-card',
+          { opacity: 0, y: 22, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.12 },
+          '-=0.35'
+        )
+        .fromTo('.about-education', { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.65 }, '-=0.45')
+        .fromTo(
+          '.about-availability',
+          { opacity: 0, y: 22, scale: 0.98 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.55 },
+          '-=0.35'
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
+
   return (
-    <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
+    <section
+      ref={sectionRef}
+      id="about"
+      className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+    >
       <SectionHeader
         tag="Profile & Background"
         title="Engineering Mindset & Foundations"
         subtitle="Bridging software engineering, infrastructure automation, and applied machine learning to build dependable digital systems."
+        className="about-header"
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Biography & Philosophy Column */}
         <div className="lg:col-span-7 space-y-6">
-          <GlassPanel className="space-y-4">
+          <GlassPanel className="about-bio space-y-4">
             <h3 className="text-xl font-bold text-white flex items-center gap-2">
               <Code2 className="w-5 h-5 text-cosmic-blue" />
               <span>About Me</span>
@@ -40,7 +98,7 @@ export const AboutSection: React.FC = () => {
 
           {/* Core Focus Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <GlassPanel hoverGlow glowColor="blue" className="p-5">
+            <GlassPanel hoverGlow glowColor="blue" className="about-focus-card p-5">
               <Server className="w-6 h-6 text-cosmic-blue mb-2" />
               <h4 className="text-sm font-semibold text-white mb-1">Systems Observability</h4>
               <p className="text-xs text-slate-muted leading-relaxed">
@@ -48,7 +106,7 @@ export const AboutSection: React.FC = () => {
               </p>
             </GlassPanel>
 
-            <GlassPanel hoverGlow glowColor="violet" className="p-5">
+            <GlassPanel hoverGlow glowColor="violet" className="about-focus-card p-5">
               <Cpu className="w-6 h-6 text-cosmic-violet mb-2" />
               <h4 className="text-sm font-semibold text-white mb-1">Applied AI Integration</h4>
               <p className="text-xs text-slate-muted leading-relaxed">
@@ -61,7 +119,7 @@ export const AboutSection: React.FC = () => {
         {/* Education & Location Column */}
         <div className="lg:col-span-5 space-y-6">
           {/* Education Card */}
-          <GlassPanel className="space-y-4">
+          <GlassPanel className="about-education space-y-4">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-xl bg-cosmic-blue/10 border border-cosmic-blue/30 text-cosmic-blue">
                 <GraduationCap className="w-6 h-6" />
@@ -92,7 +150,7 @@ export const AboutSection: React.FC = () => {
           </GlassPanel>
 
           {/* Location & Contact Summary */}
-          <GlassPanel className="p-5">
+          <GlassPanel className="about-availability p-5">
             <div className="flex items-center gap-2 text-white font-medium text-sm mb-2">
               <MapPin className="w-4 h-4 text-emerald-400" />
               <span>Location &amp; Availability</span>
@@ -110,4 +168,3 @@ export const AboutSection: React.FC = () => {
     </section>
   );
 };
-

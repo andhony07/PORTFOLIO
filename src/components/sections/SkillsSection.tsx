@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SectionHeader } from '../common/SectionHeader';
 import { GlassPanel } from '../common/GlassPanel';
 import { Code, Layout, Server, Cloud, Brain, Database, Layers } from 'lucide-react';
 import { skillsRegistry } from '../../data/skills';
 import { SkillItem } from '../../types/portfolio';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 type SkillCategoryType = 'all' | SkillItem['category'];
 
 export const SkillsSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
   const [activeCategory, setActiveCategory] = useState<SkillCategoryType>('all');
 
   const categories: Array<{ id: SkillItem['category']; title: string; icon: React.ReactNode }> = [
@@ -23,16 +32,72 @@ export const SkillsSection: React.FC = () => {
     ? categories
     : categories.filter((c) => c.id === activeCategory);
 
+  // ScrollTrigger entrance choreography
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      const isHeadless = typeof window !== 'undefined' && window.navigator.userAgent.includes('jsdom');
+      if (reducedMotion || isHeadless) {
+        gsap.set(['.skills-header', '.skills-filters', '.skill-category-card'], {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        });
+        return;
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          once: true,
+        },
+        defaults: { ease: 'power3.out' },
+      });
+
+      tl.fromTo('.skills-header', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.65 })
+        .fromTo('.skills-filters', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.35')
+        .fromTo(
+          '.skill-category-card',
+          { opacity: 0, y: 26, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.08 },
+          '-=0.3'
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
+
+  // Subtle restagger on category filter change
+  useEffect(() => {
+    if (reducedMotion) return;
+    const isHeadless = typeof window !== 'undefined' && window.navigator.userAgent.includes('jsdom');
+    if (isHeadless) return;
+
+    gsap.fromTo(
+      '.skill-category-card',
+      { opacity: 0, y: 14 },
+      { opacity: 1, y: 0, duration: 0.35, stagger: 0.04, ease: 'power2.out' }
+    );
+  }, [activeCategory, reducedMotion]);
+
   return (
-    <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
+    <section
+      ref={sectionRef}
+      id="skills"
+      className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+    >
       <SectionHeader
         tag="Technical Matrix"
-        title="Skills &amp; Technologies"
+        title="Skills & Technologies"
         subtitle="Hands-on competencies developed across production repositories, automated test suites, and academic coursework."
+        className="skills-header"
       />
 
       {/* Category Filter Tabs */}
-      <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
+      <div className="skills-filters flex flex-wrap items-center justify-center gap-2 mb-10">
         <button
           onClick={() => setActiveCategory('all')}
           className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-mono uppercase tracking-wider transition-all duration-200 cursor-pointer ${
@@ -70,7 +135,7 @@ export const SkillsSection: React.FC = () => {
           const catSkills = skillsRegistry.filter((s) => s.category === cat.id);
 
           return (
-            <GlassPanel key={cat.id} hoverGlow className="space-y-4">
+            <GlassPanel key={cat.id} hoverGlow className="skill-category-card space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-white/10">
                 <div className="flex items-center gap-2.5">
                   <div className="p-2 rounded-lg bg-white/5 border border-white/10">
@@ -98,7 +163,7 @@ export const SkillsSection: React.FC = () => {
                           ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
                           : skill.level === 'Proficient'
                           ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
-                          : 'bg-white/5 text-slate-muted border border-white/10'
+                          : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
                       }`}
                     >
                       {skill.level}

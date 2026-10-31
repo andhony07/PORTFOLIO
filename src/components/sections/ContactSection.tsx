@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SectionHeader } from '../common/SectionHeader';
 import { GlassPanel } from '../common/GlassPanel';
 import { Button } from '../common/Button';
 import { Mail, Check, MapPin, Send, ExternalLink, MessageSquare, Clock } from 'lucide-react';
 import { Github, Linkedin } from '../common/Icons';
 import { developerProfile } from '../../data/profile';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export const ContactSection: React.FC = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
   const [copied, setCopied] = useState(false);
   const [selectedTopic, setSelectedTopic] = useState<string>('Placement & Full-Time Role');
 
@@ -26,16 +35,57 @@ export const ContactSection: React.FC = () => {
     `Inquiry regarding ${selectedTopic} - ${developerProfile.name}`
   )}`;
 
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      const isHeadless = typeof window !== 'undefined' && window.navigator.userAgent.includes('jsdom');
+      if (reducedMotion || isHeadless) {
+        gsap.set(['.contact-header', '.contact-deck'], {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+        });
+        return;
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 80%',
+          once: true,
+        },
+        defaults: { ease: 'power3.out' },
+      });
+
+      tl.fromTo('.contact-header', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.65 })
+        .fromTo(
+          '.contact-deck',
+          { opacity: 0, y: 32, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.7 },
+          '-=0.4'
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
+
   return (
-    <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
+    <section
+      ref={sectionRef}
+      id="contact"
+      className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+    >
       <SectionHeader
         tag="Connection Deck"
         title="Get In Touch"
         subtitle="Actively exploring placement drives, technical internships, and collaborative developer networking."
+        className="contact-header"
       />
 
       <div className="max-w-3xl mx-auto">
-        <GlassPanel hoverGlow glowColor="blue" className="p-8 sm:p-10 space-y-8 text-center sm:text-left">
+        <GlassPanel hoverGlow glowColor="blue" className="contact-deck p-8 sm:p-10 space-y-8 text-center sm:text-left">
           {/* Header Action Banner */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pb-6 border-b border-white/10">
             <div className="space-y-1">
@@ -149,9 +199,9 @@ export const ContactSection: React.FC = () => {
           </div>
 
           {/* Response SLA Note */}
-          <div className="flex items-center justify-center sm:justify-start gap-2 pt-2 text-xs text-slate-dim font-mono">
+          <div className="flex items-center justify-center sm:justify-start gap-2 pt-2 text-xs text-slate-dim font-mono border-t border-white/5">
             <Clock className="w-3.5 h-3.5 text-cosmic-blue" />
-            <span>Average response window: within 24 hours.</span>
+            <span>Average response window: within 24 hours. (Timezone: IST UTC+05:30)</span>
           </div>
         </GlassPanel>
       </div>

@@ -2,25 +2,32 @@ import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { useThree, useFrame } from '@react-three/fiber';
 import { usePerformance } from '../../hooks/usePerformance';
+import { globalScrollState, initScrollProgressSync } from '../../utils/scrollState';
+import { interpolateWaypoint } from '../../utils/cameraWaypoints';
 
 export interface CameraControllerProps {
   basePosition?: [number, number, number];
 }
 
-export const CameraController: React.FC<CameraControllerProps> = ({
-  basePosition = [0, 0, 7.5],
-}) => {
+export const CameraController: React.FC<CameraControllerProps> = () => {
   const { camera } = useThree();
   const { deviceTier, reducedMotion } = usePerformance();
 
   // Mouse normalized coordinates: [-1, 1]
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
   const entranceProgressRef = useRef(reducedMotion ? 1.0 : 0.0);
+  const currentTargetRef = useRef(new THREE.Vector3(0.35, 0, 0));
+
+  // Initialize passive scroll synchronization
+  useEffect(() => {
+    const cleanupScroll = initScrollProgressSync();
+    return () => cleanupScroll();
+  }, []);
 
   // Initial camera setup for cinematic entrance
   useEffect(() => {
     if (reducedMotion) {
-      camera.position.set(basePosition[0], basePosition[1], basePosition[2]);
+      camera.position.set(0, 0, 7.5);
       entranceProgressRef.current = 1.0;
       return;
     }
@@ -28,7 +35,7 @@ export const CameraController: React.FC<CameraControllerProps> = ({
     // Set initial position in deep space for cinematic glide
     camera.position.set(0, 1.8, 13.5);
     entranceProgressRef.current = 0.0;
-  }, [camera, basePosition, reducedMotion]);
+  }, [camera, reducedMotion]);
 
   // Window-level mouse & pointer listener for smooth parallax
   useEffect(() => {
@@ -54,15 +61,18 @@ export const CameraController: React.FC<CameraControllerProps> = ({
     }
 
     const t = entranceProgressRef.current;
-    // Cubic ease out curve for entrance
     const easeT = reducedMotion ? 1.0 : 1 - Math.pow(1 - t, 3);
 
-    // Initial starting Z (13.5) to Target Z (7.5)
-    const currentBaseZ = THREE.MathUtils.lerp(13.5, basePosition[2], easeT);
-    const currentBaseY = THREE.MathUtils.lerp(1.8, basePosition[1], easeT);
-    const currentBaseX = basePosition[0];
+    // 2. Query Scroll Waypoint for current progress
+    const currentProgress = globalScrollState.progress;
+    const waypoint = interpolateWaypoint(currentProgress, reducedMotion, deviceTier);
 
-    // 2. Parallax Strength Governed by Device Tier
+    // Initial glide blends from deep space (13.5) into the waypoint position
+    const currentBaseX = THREE.MathUtils.lerp(0, waypoint.position[0], easeT);
+    const currentBaseY = THREE.MathUtils.lerp(1.8, waypoint.position[1], easeT);
+    const currentBaseZ = THREE.MathUtils.lerp(13.5, waypoint.position[2], easeT);
+
+    // 3. Parallax Intensity Governed by Device Tier & Motion Preference
     let parallaxIntensityX = 0.35;
     let parallaxIntensityY = 0.22;
 
@@ -80,17 +90,20 @@ export const CameraController: React.FC<CameraControllerProps> = ({
 
     const targetCameraX = currentBaseX + mouseRef.current.x * parallaxIntensityX;
     const targetCameraY = currentBaseY + mouseRef.current.y * parallaxIntensityY;
+    const targetCameraZ = currentBaseZ;
 
-    // Apply linear interpolation to camera position for floaty feel
+    // Apply linear interpolation to camera position for smooth, floaty feel
     camera.position.x = THREE.MathUtils.lerp(camera.position.x, targetCameraX, 0.05);
     camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetCameraY, 0.05);
-    camera.position.z = THREE.MathUtils.lerp(camera.position.z, currentBaseZ, 0.08);
+    camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetCameraZ, 0.06);
 
-    // Subtle lookAt target slightly framing the planet on the right
-    const lookTargetX = deviceTier === 'mobile' ? 0 : 0.35;
-    camera.lookAt(lookTargetX, 0, 0);
+    // Smoothly interpolate lookAt target
+    currentTargetRef.current.x = THREE.MathUtils.lerp(currentTargetRef.current.x, waypoint.target[0], 0.05);
+    currentTargetRef.current.y = THREE.MathUtils.lerp(currentTargetRef.current.y, waypoint.target[1], 0.05);
+    currentTargetRef.current.z = THREE.MathUtils.lerp(currentTargetRef.current.z, waypoint.target[2], 0.05);
+
+    camera.lookAt(currentTargetRef.current);
   });
 
   return null;
 };
-
