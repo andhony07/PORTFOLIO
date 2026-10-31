@@ -1,70 +1,202 @@
 {
-  "manifestVersion": "1.1.0",
-  "description": "Asset manifest mapping verified credentials to pending high-resolution individual certificate captures.",
-  "storageDirectory": "public/assets/certificates/",
-  "certificates": [
+  "manifestVersion": "2.0.0",
+  "generatedAt": "2026-10-31T13:00:00Z",
+  "recipient": "Andhony Saviyar S.",
+  "description": "Verified production asset manifest mapping authentic credentials, hackathon participations, internships, and workshops to web-optimized previews and original documents.",
+  "storageDirectories": {
+    "images": "/assets/certificates/",
+    "documents": "/assets/certificates/documents/"
+  },
+  "certifications": [
     {
       "id": "aws-bedrock",
       "title": "Prompt Engineering Best Practices for Amazon Bedrock Models",
       "issuer": "Amazon Web Services (AWS)",
-      "assetStatus": "pending_upload",
-      "expectedFilename": "aws-bedrock.png",
-      "imagePath": null,
-      "placeholderType": "vector_hologram"
+      "date": "June 16, 2026",
+      "instructor": "Michelle Vaz",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/aws-bedrock-prompt-eng.png",
+      "documentPath": "/assets/certificates/documents/aws-prompt-engineering.pdf",
+      "verificationUrl": null
+    },
+    {
+      "id": "aws-cloud-security",
+      "title": "Automating Cloud Security Posture Management on AWS",
+      "issuer": "Amazon Web Services (AWS)",
+      "date": "June 16, 2026",
+      "instructor": "Michelle Vaz",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/aws-cloud-security.png",
+      "documentPath": "/assets/certificates/documents/aws-automating-cloud-security.pdf",
+      "verificationUrl": null
     },
     {
       "id": "vista-forage-ai",
       "title": "AI in Action Job Simulation",
       "issuer": "Vista / Forage",
-      "assetStatus": "pending_upload",
-      "expectedFilename": "vista-forage-ai.png",
-      "imagePath": null,
-      "placeholderType": "vector_hologram"
+      "date": "June 10, 2026",
+      "credentialId": "Enrolment: 9ux8MFDxk3sv5FCje",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/vista-ai-in-action.png",
+      "documentPath": "/assets/certificates/documents/vista-ai-in-action-job-sim.pdf",
+      "verificationUrl": null
     },
     {
       "id": "tata-forage-genai",
       "title": "GenAI Powered Data Analytics Job Simulation",
       "issuer": "Tata / Forage",
-      "assetStatus": "pending_upload",
-      "expectedFilename": "tata-forage-genai.png",
-      "imagePath": null,
-      "placeholderType": "vector_hologram"
+      "date": "June 6, 2026",
+      "credentialId": "Enrolment: MxjPAt7ZsCfy3Y7zP",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/tata-genai-analytics.png",
+      "documentPath": "/assets/certificates/documents/tata-genai-data-analytics.pdf",
+      "verificationUrl": null
     },
     {
       "id": "deloitte-data-analytics",
       "title": "Data Analytics Job Simulation",
       "issuer": "Deloitte",
-      "assetStatus": "pending_upload",
-      "expectedFilename": "deloitte-data-analytics.png",
-      "imagePath": null,
-      "placeholderType": "vector_hologram"
+      "date": "June 4, 2026",
+      "credentialId": "Enrolment: Pf9A7N63qPaSNBnjw",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/deloitte-data-analytics.png",
+      "documentPath": "/assets/certificates/documents/deloitte-data-analytics-job-sim.pdf",
+      "verificationUrl": null
     },
     {
       "id": "deloitte-technology",
       "title": "Technology Job Simulation",
       "issuer": "Deloitte",
-      "assetStatus": "pending_upload",
-      "expectedFilename": "deloitte-technology.png",
-      "imagePath": null,
-      "placeholderType": "vector_hologram"
+      "date": "June 4, 2026",
+      "credentialId": "Enrolment: Q9gXDLui7c6MabCCS",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/deloitte-technology.png",
+      "documentPath": "/assets/certificates/documents/deloitte-technology-job-sim.pdf",
+      "verificationUrl": null
     },
     {
       "id": "hackerrank-python",
       "title": "Python (Basic)",
       "issuer": "HackerRank",
-      "assetStatus": "pending_upload",
-      "expectedFilename": "hackerrank-python.png",
-      "imagePath": null,
-      "placeholderType": "vector_hologram"
+      "date": "August 15, 2026",
+      "credentialId": "B177A5BC6A52",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/hackerrank-python-basic.png",
+      "documentPath": "/assets/certificates/documents/hackerrank-python-basic.pdf",
+      "verificationUrl": null
+    },
+    {
+      "id": "hackerrank-problem-solving",
+      "title": "Problem Solving (Basic)",
+      "issuer": "HackerRank",
+      "date": "October 17, 2026",
+      "credentialId": "92C0249D7750",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/hackerrank-problem-solving-basic.png",
+      "documentPath": "/assets/certificates/documents/hackerrank-problem-solving-basic.pdf",
+      "verificationUrl": null
     },
     {
       "id": "nptel-java",
-      "title": "Programming in Java (Score: 88%)",
-      "issuer": "NPTEL",
-      "assetStatus": "pending_upload",
-      "expectedFilename": "nptel-java.png",
-      "imagePath": null,
-      "placeholderType": "vector_hologram"
+      "title": "Programming in Java",
+      "issuer": "NPTEL (IIT Kharagpur)",
+      "date": "Jul-Oct 2025",
+      "score": "88% (Elite)",
+      "credentialId": "NPTEL25CS110S370900088",
+      "assignmentScore": "24.94/25",
+      "examScore": "63/75",
+      "totalCandidates": 26183,
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/nptel-java.png",
+      "documentPath": "/assets/certificates/documents/nptel-programming-in-java.pdf",
+      "verificationUrl": null
+    }
+  ],
+  "achievements": [
+    {
+      "id": "adobe-hackathon",
+      "title": "Adobe University Hackathon Participation",
+      "issuer": "Adobe / Sri Shakthi Institute of Engineering and Technology",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/adobe-hackathon.png",
+      "documentPath": "/assets/certificates/documents/adobe-hackathon.pdf"
+    },
+    {
+      "id": "frontend-odyssey",
+      "title": "The Frontend Odyssey 2026",
+      "issuer": "Frontend Arena / Unstop",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/frontend-odyssey.png",
+      "documentPath": "/assets/certificates/documents/frontend-odyssey.pdf"
+    },
+    {
+      "id": "hacksprint-26",
+      "title": "HACKSPRINT '26 (24-Hour Hackathon)",
+      "issuer": "AI Research Lab SIET",
+      "date": "July 22-23, 2026",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/hacksprint-26.png",
+      "documentPath": "/assets/certificates/documents/hacksprint-26.pdf"
+    },
+    {
+      "id": "tvs-credit-epic",
+      "title": "TVS Credit E.P.I.C 8.0 - IT Challenge",
+      "issuer": "TVS Credit Services Limited / Unstop",
+      "date": "October 10, 2026",
+      "team": "Team Bankai",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/tvs-credit-epic.png",
+      "documentPath": "/assets/certificates/documents/tvs-credit-epic.pdf"
+    },
+    {
+      "id": "hackerrank-orchestrate",
+      "title": "HackerRank Orchestrate — Ghost Data Deletion Audit Challenge",
+      "issuer": "HackerRank",
+      "date": "October 2026",
+      "rank": "Rank #1819 / 4094",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/hackerrank-orchestrate.png",
+      "documentPath": "/assets/certificates/documents/hackerrank-orchestrate.pdf"
+    }
+  ],
+  "experience": [
+    {
+      "id": "internship-codealpha",
+      "title": "Python Programming Virtual Internship",
+      "company": "CodeAlpha",
+      "duration": "July 20 - August 20, 2026",
+      "certificateId": "CA/DF1/203979",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/internship-codealpha.png",
+      "documentPath": "/assets/certificates/documents/codealpha-python-internship.pdf"
+    },
+    {
+      "id": "lor-codealpha",
+      "title": "Letter of Recommendation",
+      "company": "CodeAlpha",
+      "date": "August 20, 2026",
+      "certificateId": "CA/DF1/203979",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/lor-codealpha.png",
+      "documentPath": "/assets/certificates/documents/codealpha-lor.pdf"
+    },
+    {
+      "id": "internship-brainery",
+      "title": "Full Stack Development Internship",
+      "company": "Brainery Spot Technology",
+      "duration": "May 22 - May 28, 2026",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/internship-brainery.png",
+      "documentPath": "/assets/certificates/documents/brainery-spot-internship.pdf"
+    },
+    {
+      "id": "workshop-be10x",
+      "title": "AI Tools & Claude Workshop",
+      "organizer": "be10x",
+      "date": "August 30, 2026",
+      "status": "verified_authentic",
+      "imagePath": "/assets/certificates/workshop-be10x.png",
+      "documentPath": "/assets/certificates/documents/be10x-claude-workshop.pdf"
     }
   ]
 }

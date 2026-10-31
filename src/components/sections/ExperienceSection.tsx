@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { SectionHeader } from '../common/SectionHeader';
 import { GlassPanel } from '../common/GlassPanel';
 import { Badge } from '../common/Badge';
-import { Briefcase, BookOpen, Clock, CheckCircle, ShieldCheck } from 'lucide-react';
+import { Briefcase, BookOpen, Clock, CheckCircle, ShieldCheck, FileText, ExternalLink } from 'lucide-react';
 import { internshipsRegistry, workshopsRegistry } from '../../data/experience';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { gsap } from 'gsap';
@@ -112,6 +112,36 @@ export const ExperienceSection: React.FC = () => {
                     </span>
                   ))}
                 </div>
+
+                {/* Verification & Document Links */}
+                {(item.documentUrl || item.recommendationLetterUrl) && (
+                  <div className="pt-2 flex flex-wrap items-center gap-2 border-t border-white/5 text-xs font-mono">
+                    {item.documentUrl && (
+                      <a
+                        href={item.documentUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-cosmic-blue/10 hover:bg-cosmic-blue/20 text-cyan-300 hover:text-white border border-cosmic-blue/30 text-[11px] transition-colors"
+                      >
+                        <FileText className="w-3 h-3" />
+                        <span>Completion Certificate</span>
+                        <ExternalLink className="w-2.5 h-2.5 opacity-70" />
+                      </a>
+                    )}
+                    {item.recommendationLetterUrl && (
+                      <a
+                        href={item.recommendationLetterUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-cosmic-violet/10 hover:bg-cosmic-violet/20 text-purple-300 hover:text-white border border-cosmic-violet/30 text-[11px] transition-colors"
+                      >
+                        <FileText className="w-3 h-3" />
+                        <span>Letter of Recommendation</span>
+                        <ExternalLink className="w-2.5 h-2.5 opacity-70" />
+                      </a>
+                    )}
+                  </div>
+                )}
               </GlassPanel>
             ))}
           </div>
@@ -160,9 +190,23 @@ export const ExperienceSection: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="pt-2 flex items-center gap-1.5 text-[11px] text-slate-dim font-mono border-t border-white/5">
-                  <ShieldCheck className="w-3.5 h-3.5 text-cosmic-blue" />
-                  <span>Interactive workshop completion</span>
+                <div className="pt-2 flex items-center justify-between gap-2 text-[11px] text-slate-dim font-mono border-t border-white/5">
+                  <div className="flex items-center gap-1.5">
+                    <ShieldCheck className="w-3.5 h-3.5 text-cosmic-blue" />
+                    <span>Interactive workshop completion</span>
+                  </div>
+                  {workshop.documentUrl && (
+                    <a
+                      href={workshop.documentUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-cyan-300 hover:text-white transition-colors"
+                    >
+                      <FileText className="w-3 h-3" />
+                      <span>Certificate</span>
+                      <ExternalLink className="w-2.5 h-2.5 opacity-70" />
+                    </a>
+                  )}
                 </div>
               </GlassPanel>
             ))}

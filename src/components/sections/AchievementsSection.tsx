@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { SectionHeader } from '../common/SectionHeader';
 import { GlassPanel } from '../common/GlassPanel';
 import { Badge } from '../common/Badge';
-import { Trophy, Calendar, CheckCircle2 } from 'lucide-react';
+import { Trophy, Calendar, CheckCircle2, FileText, ExternalLink } from 'lucide-react';
 import { achievementsRegistry } from '../../data/achievements';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { gsap } from 'gsap';
@@ -125,7 +125,7 @@ export const AchievementsSection: React.FC = () => {
                 {item.description}
               </p>
 
-              <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-white/5">
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/5">
                 <div className="flex flex-wrap gap-1.5">
                   {item.tags.map((tag, idx) => (
                     <span
@@ -137,9 +137,23 @@ export const AchievementsSection: React.FC = () => {
                   ))}
                 </div>
 
-                <div className="flex items-center gap-1 text-[11px] text-emerald-400 font-mono">
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                  <span>Verified Record</span>
+                <div className="flex items-center gap-2">
+                  {item.documentUrl && (
+                    <a
+                      href={item.documentUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1 text-[11px] font-mono text-cyan-300 hover:text-white px-2 py-0.5 rounded bg-cosmic-blue/10 hover:bg-cosmic-blue/20 border border-cosmic-blue/30 transition-colors"
+                    >
+                      <FileText className="w-3 h-3" />
+                      <span>Certificate PDF</span>
+                      <ExternalLink className="w-2.5 h-2.5 opacity-70" />
+                    </a>
+                  )}
+                  <div className="flex items-center gap-1 text-[11px] text-emerald-400 font-mono">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    <span>Verified Record</span>
+                  </div>
                 </div>
               </div>
             </GlassPanel>

@@ -21,6 +21,14 @@ export const SpaceLayout: React.FC<SpaceLayoutProps> = ({ children }) => {
 
   return (
     <div className="relative min-h-screen min-h-[100dvh] w-full overflow-x-hidden bg-space-bg text-slate-light selection:bg-cosmic-blue/30 selection:text-white flex flex-col">
+      {/* WCAG 2.1 AA Compliant Skip to Content link */}
+      <a
+        href="#about"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2.5 focus:bg-space-deep focus:text-white focus:border focus:border-cosmic-blue focus:rounded-xl focus:shadow-glow-blue focus:font-mono focus:text-xs"
+      >
+        Skip to main content
+      </a>
+
       {/* Persistent 3D Canvas with WebGL detection & graceful CSS fallback */}
       <SpaceCanvas />
 
@@ -28,7 +36,7 @@ export const SpaceLayout: React.FC<SpaceLayoutProps> = ({ children }) => {
       <Navbar />
 
       {/* Primary Content Stream */}
-      <main className="relative z-10 flex-grow pt-20">
+      <main id="main-content" className="relative z-10 flex-grow pt-20" role="main">
         {children}
       </main>
 

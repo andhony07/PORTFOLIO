@@ -26,3 +26,11 @@ dist-ssr
 # Testing
 coverage
 
+# Archive and temp certificates
+*.zip
+.venv*
+temp_certificates/
+temp_renders/
+temp_screenshots/
+
+

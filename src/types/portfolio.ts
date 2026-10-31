@@ -33,9 +33,20 @@ export interface Certification {
   topics: string[];
   score?: string;
   image: string | null;
+  documentUrl?: string | null;
   verificationUrl: string | null;
   status: 'completed';
-  assetFilename?: string; // Prepared filename mapping for upcoming certificate ZIP upload
+  assetFilename?: string;
+  issueDate?: string;
+  credentialId?: string;
+  verified: boolean;
+  scoreBreakdown?: {
+    assignmentScore?: string;
+    proctoredScore?: string;
+    rollNumber?: string;
+    totalCandidates?: number;
+    elite?: boolean;
+  };
 }
 
 export type AchievementStatus = 'participated' | 'submitted' | 'participant';
@@ -50,6 +61,8 @@ export interface Achievement {
   status: AchievementStatus;
   description: string;
   tags: string[];
+  documentUrl?: string | null;
+  certificateImage?: string | null;
 }
 
 export interface Internship {
@@ -59,6 +72,9 @@ export interface Internship {
   duration: string;
   description: string;
   skills: string[];
+  documentUrl?: string | null;
+  certificateImage?: string | null;
+  recommendationLetterUrl?: string | null;
 }
 
 export interface Workshop {
@@ -67,6 +83,8 @@ export interface Workshop {
   organizer: string;
   description: string;
   topics: string[];
+  documentUrl?: string | null;
+  certificateImage?: string | null;
 }
 
 export interface SkillItem {

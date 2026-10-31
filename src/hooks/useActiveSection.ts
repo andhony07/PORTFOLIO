@@ -26,6 +26,17 @@ export function useActiveSection() {
       if (el) observer.observe(el);
     });
 
+    // Handle deep-linked hash navigation on mount
+    if (window.location.hash) {
+      const targetId = window.location.hash.substring(1);
+      const targetEl = document.getElementById(targetId);
+      if (targetEl) {
+        setTimeout(() => {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+
     return () => observer.disconnect();
   }, [setActiveSection]);
 }

@@ -22,3 +22,4 @@ for (const t of tests) {
     console.error(`[FAIL] ${t.name}:`, err.message);
   }
 }
+
