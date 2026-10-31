@@ -11,7 +11,7 @@ export interface CameraControllerProps {
 
 export const CameraController: React.FC<CameraControllerProps> = () => {
   const { camera } = useThree();
-  const { deviceTier, reducedMotion } = usePerformance();
+  const { deviceTier, reducedMotion, isPageVisible } = usePerformance();
 
   // Mouse normalized coordinates: [-1, 1]
   const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
@@ -42,6 +42,9 @@ export const CameraController: React.FC<CameraControllerProps> = () => {
     if (reducedMotion || deviceTier === 'mobile') return;
 
     const handlePointerMove = (e: PointerEvent) => {
+      // Discard touch and pen inputs to prevent accidental parallax jumping during touch scrolling
+      if (e.pointerType === 'touch' || e.pointerType === 'pen') return;
+
       // Normalize to [-1, 1]
       const nx = (e.clientX / window.innerWidth) * 2 - 1;
       const ny = -(e.clientY / window.innerHeight) * 2 + 1;
@@ -55,6 +58,8 @@ export const CameraController: React.FC<CameraControllerProps> = () => {
   }, [deviceTier, reducedMotion]);
 
   useFrame((_state, delta) => {
+    if (!isPageVisible) return;
+
     // 1. Cinematic Entrance Interpolation
     if (entranceProgressRef.current < 1.0 && !reducedMotion) {
       entranceProgressRef.current = Math.min(1.0, entranceProgressRef.current + delta * 0.45);

@@ -20,7 +20,7 @@ export const SpaceLayout: React.FC<SpaceLayoutProps> = ({ children }) => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-space-bg text-slate-light selection:bg-cosmic-blue/30 selection:text-white flex flex-col">
+    <div className="relative min-h-screen min-h-[100dvh] w-full overflow-x-hidden bg-space-bg text-slate-light selection:bg-cosmic-blue/30 selection:text-white flex flex-col">
       {/* Persistent 3D Canvas with WebGL detection & graceful CSS fallback */}
       <SpaceCanvas />
 

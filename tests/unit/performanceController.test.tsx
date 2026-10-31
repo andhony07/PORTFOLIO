@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { PerformanceController } from '../../src/components/3d/PerformanceController';
 import { usePerformance } from '../../src/hooks/usePerformance';
@@ -13,6 +13,8 @@ const TestConsumer: React.FC = () => {
       <span data-testid="stars">{config.starCount}</span>
       <span data-testid="segments">{config.planetSegments}</span>
       <span data-testid="rings">{String(config.enableRings)}</span>
+      <span data-testid="visible">{String(config.isPageVisible)}</span>
+      <span data-testid="lowpower">{String(config.isLowPower)}</span>
     </div>
   );
 };
@@ -59,5 +61,36 @@ describe('PerformanceController Adaptive Configuration', () => {
     expect(Number(screen.getByTestId('stars').textContent)).toBe(1200);
     expect(Number(screen.getByTestId('segments').textContent)).toBe(32);
     expect(screen.getByTestId('rings').textContent).toBe('false');
+  });
+
+  it('tracks page visibility state via document visibilitychange', () => {
+    window.innerWidth = 1200;
+    render(
+      <PerformanceController>
+        <TestConsumer />
+      </PerformanceController>
+    );
+
+    expect(screen.getByTestId('visible').textContent).toBe('true');
+
+    act(() => {
+      Object.defineProperty(document, 'visibilityState', {
+        value: 'hidden',
+        configurable: true,
+      });
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+
+    expect(screen.getByTestId('visible').textContent).toBe('false');
+
+    act(() => {
+      Object.defineProperty(document, 'visibilityState', {
+        value: 'visible',
+        configurable: true,
+      });
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+
+    expect(screen.getByTestId('visible').textContent).toBe('true');
   });
 });

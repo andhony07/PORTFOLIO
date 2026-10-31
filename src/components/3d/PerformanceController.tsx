@@ -7,6 +7,13 @@ export interface PerformanceControllerProps {
   children: React.ReactNode;
 }
 
+interface BatteryManager extends EventTarget {
+  charging: boolean;
+  level: number;
+  addEventListener(type: 'chargingchange' | 'levelchange', listener: EventListener): void;
+  removeEventListener(type: 'chargingchange' | 'levelchange', listener: EventListener): void;
+}
+
 export const PerformanceController: React.FC<PerformanceControllerProps> = ({ children }) => {
   const reducedMotion = useReducedMotion();
   const { setPerformanceMode } = usePortfolioStore();
@@ -16,10 +23,70 @@ export const PerformanceController: React.FC<PerformanceControllerProps> = ({ ch
     return 1200;
   });
 
+  const [isPageVisible, setIsPageVisible] = useState<boolean>(() => {
+    if (typeof document !== 'undefined') return document.visibilityState === 'visible';
+    return true;
+  });
+
+  const [isLowPower, setIsLowPower] = useState<boolean>(false);
+
+  // 1. Responsive window resizing
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize, { passive: true });
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 2. Page Visibility API listener (pause rendering when inactive/backgrounded)
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+
+    const handleVisibilityChange = () => {
+      setIsPageVisible(document.visibilityState === 'visible');
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, []);
+
+  // 3. Optional Battery API integration (purely advisory, never a hard dependency)
+  useEffect(() => {
+    if (typeof navigator === 'undefined') return;
+
+    let batteryInstance: BatteryManager | null = null;
+    let updateBatteryStatus: (() => void) | null = null;
+
+    type NavigatorWithBattery = Navigator & {
+      getBattery?: () => Promise<BatteryManager>;
+    };
+
+    const nav = navigator as NavigatorWithBattery;
+
+    if (typeof nav.getBattery === 'function') {
+      nav.getBattery()
+        .then((battery) => {
+          batteryInstance = battery;
+          updateBatteryStatus = () => {
+            // Low power mode triggered if battery <= 20% and not currently charging
+            const low = !battery.charging && battery.level <= 0.20;
+            setIsLowPower(low);
+          };
+
+          updateBatteryStatus();
+          battery.addEventListener('levelchange', updateBatteryStatus);
+          battery.addEventListener('chargingchange', updateBatteryStatus);
+        })
+        .catch(() => {
+          // Gracefully ignore if blocked by permissions policy or sandbox
+        });
+    }
+
+    return () => {
+      if (batteryInstance && updateBatteryStatus) {
+        batteryInstance.removeEventListener('levelchange', updateBatteryStatus);
+        batteryInstance.removeEventListener('chargingchange', updateBatteryStatus);
+      }
+    };
   }, []);
 
   const config = useMemo<PerformanceConfig>(() => {
@@ -54,6 +121,14 @@ export const PerformanceController: React.FC<PerformanceControllerProps> = ({ ch
       enableFloatingObjects = true;
     }
 
+    // Conservative Low-Power Override (if battery is low or charging is disconnected)
+    if (isLowPower) {
+      dpr = 1.0;
+      starCount = Math.min(starCount, 1500);
+      planetSegments = 32;
+      enableFloatingObjects = false;
+    }
+
     return {
       deviceTier: tier,
       dpr,
@@ -62,12 +137,14 @@ export const PerformanceController: React.FC<PerformanceControllerProps> = ({ ch
       enableRings,
       enableFloatingObjects,
       reducedMotion,
+      isPageVisible,
+      isLowPower,
     };
-  }, [windowWidth, reducedMotion]);
+  }, [windowWidth, reducedMotion, isPageVisible, isLowPower]);
 
   useEffect(() => {
-    setPerformanceMode(config.deviceTier === 'mobile' ? 'low' : config.deviceTier === 'tablet' ? 'medium' : 'high');
-  }, [config.deviceTier, setPerformanceMode]);
+    setPerformanceMode(config.deviceTier === 'mobile' || isLowPower ? 'low' : config.deviceTier === 'tablet' ? 'medium' : 'high');
+  }, [config.deviceTier, isLowPower, setPerformanceMode]);
 
   return (
     <PerformanceContext.Provider value={config}>

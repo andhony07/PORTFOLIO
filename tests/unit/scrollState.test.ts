@@ -22,3 +22,4 @@ describe('Scroll State Synchronizer', () => {
     }).not.toThrow();
   });
 });
+

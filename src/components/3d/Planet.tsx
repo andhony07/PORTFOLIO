@@ -18,7 +18,7 @@ export const Planet: React.FC<PlanetProps> = ({
   const surfaceMeshRef = useRef<THREE.Mesh>(null);
   const cloudMeshRef = useRef<THREE.Mesh>(null);
 
-  const { planetSegments, reducedMotion, deviceTier } = usePerformance();
+  const { planetSegments, reducedMotion, deviceTier, isPageVisible } = usePerformance();
 
   // Adjust position and scale based on device tier
   const effectivePosition: [number, number, number] = useMemo(() => {
@@ -38,7 +38,7 @@ export const Planet: React.FC<PlanetProps> = ({
   }, []);
 
   useFrame((_state, delta) => {
-    if (reducedMotion) return;
+    if (reducedMotion || !isPageVisible) return;
 
     // Subtle planetary surface axial rotation
     if (surfaceMeshRef.current) {

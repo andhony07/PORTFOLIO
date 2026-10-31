@@ -8,10 +8,10 @@ export const FloatingObjects: React.FC = () => {
   const probeRef2 = useRef<THREE.Group>(null);
   const beaconRef1 = useRef<THREE.PointLight>(null);
 
-  const { enableFloatingObjects, reducedMotion } = usePerformance();
+  const { enableFloatingObjects, reducedMotion, isPageVisible } = usePerformance();
 
   useFrame(({ clock }) => {
-    if (reducedMotion) return;
+    if (reducedMotion || !isPageVisible) return;
     const t = clock.getElapsedTime();
 
     // Orbital trajectory for Probe 1 (inclined elliptical orbit around the planet)

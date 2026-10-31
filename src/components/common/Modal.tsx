@@ -84,7 +84,7 @@ export const Modal: React.FC<ModalProps> = ({
       <div
         ref={modalRef}
         className={cn(
-          'relative w-full z-10 glass-panel border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl bg-space-surface/95 text-slate-light my-8 animate-in fade-in zoom-in-95 duration-200',
+          'relative w-full z-10 glass-panel border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl bg-space-surface/95 text-slate-light my-8 max-h-[90vh] max-h-[90dvh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200',
           maxWidthStyles[maxWidth],
           className
         )}

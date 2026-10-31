@@ -71,7 +71,7 @@ class CanvasErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySta
 
 // Inner Canvas Wrapper consuming Performance Context
 const CanvasRoot: React.FC = () => {
-  const { dpr, deviceTier } = usePerformance();
+  const { dpr, deviceTier, isLowPower } = usePerformance();
 
   return (
     <div
@@ -83,9 +83,9 @@ const CanvasRoot: React.FC = () => {
         dpr={dpr}
         camera={{ position: [0, 0, 7.5], fov: 45, near: 0.1, far: 500 }}
         gl={{
-          antialias: deviceTier !== 'mobile',
+          antialias: deviceTier !== 'mobile' && !isLowPower,
           alpha: true,
-          powerPreference: 'high-performance',
+          powerPreference: isLowPower || deviceTier === 'mobile' ? 'low-power' : 'high-performance',
           stencil: false,
           depth: true,
         }}

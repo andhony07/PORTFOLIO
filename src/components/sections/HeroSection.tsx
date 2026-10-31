@@ -72,7 +72,7 @@ export const HeroSection: React.FC = () => {
     <section
       ref={heroContainerRef}
       id="hero"
-      className="relative min-h-[85vh] flex items-center justify-center py-16 sm:py-24 px-4 sm:px-6 lg:px-8"
+      className="relative min-h-[85vh] min-h-[85dvh] flex items-center justify-center py-12 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-4xl mx-auto text-center space-y-8">
         {/* Availability Badge */}

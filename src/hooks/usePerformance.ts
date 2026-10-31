@@ -8,6 +8,8 @@ export interface PerformanceConfig {
   enableRings: boolean;
   enableFloatingObjects: boolean;
   reducedMotion: boolean;
+  isPageVisible: boolean;
+  isLowPower: boolean;
 }
 
 export const PerformanceContext = createContext<PerformanceConfig>({
@@ -18,7 +20,8 @@ export const PerformanceContext = createContext<PerformanceConfig>({
   enableRings: true,
   enableFloatingObjects: true,
   reducedMotion: false,
+  isPageVisible: true,
+  isLowPower: false,
 });
 
 export const usePerformance = () => useContext(PerformanceContext);
-

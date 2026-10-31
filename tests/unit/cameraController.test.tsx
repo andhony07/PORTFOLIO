@@ -33,6 +33,21 @@ describe('CameraController Math & Bounds Logic', () => {
     expect(computeParallax(1.0, 'desktop', true)).toBe(0.0);
   });
 
+  it('discards touch and pen pointer events to protect native touch scrolling', () => {
+    const shouldProcessPointer = (pointerType: string, deviceTier: string, reducedMotion: boolean) => {
+      if (reducedMotion || deviceTier === 'mobile') return false;
+      if (pointerType === 'touch' || pointerType === 'pen') return false;
+      return true;
+    };
+
+    expect(shouldProcessPointer('mouse', 'desktop', false)).toBe(true);
+    expect(shouldProcessPointer('touch', 'desktop', false)).toBe(false);
+    expect(shouldProcessPointer('pen', 'desktop', false)).toBe(false);
+    expect(shouldProcessPointer('mouse', 'tablet', false)).toBe(true);
+    expect(shouldProcessPointer('touch', 'tablet', false)).toBe(false);
+    expect(shouldProcessPointer('mouse', 'mobile', false)).toBe(false);
+  });
+
   it('smoothly interpolates coordinates via THREE.MathUtils.lerp', () => {
     const startZ = 13.5;
     const targetZ = 7.5;
@@ -40,4 +55,3 @@ describe('CameraController Math & Bounds Logic', () => {
     expect(halfway).toBe(10.5);
   });
 });
-

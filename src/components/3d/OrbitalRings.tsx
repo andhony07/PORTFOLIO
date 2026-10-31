@@ -12,7 +12,7 @@ export const OrbitalRings: React.FC<OrbitalRingsProps> = ({
 }) => {
   const ringRef = useRef<THREE.Mesh>(null);
   const outerRingRef = useRef<THREE.Mesh>(null);
-  const { enableRings, reducedMotion, deviceTier } = usePerformance();
+  const { enableRings, reducedMotion, deviceTier, isPageVisible } = usePerformance();
 
   const effectivePosition: [number, number, number] =
     deviceTier === 'mobile' ? [0, 0.4, -3.2] : deviceTier === 'tablet' ? [1.0, 0, -2.0] : position;
@@ -20,7 +20,7 @@ export const OrbitalRings: React.FC<OrbitalRingsProps> = ({
   const effectiveScale = deviceTier === 'mobile' ? 0.75 : deviceTier === 'tablet' ? 0.88 : 1.0;
 
   useFrame((_state, delta) => {
-    if (reducedMotion) return;
+    if (reducedMotion || !isPageVisible) return;
     if (ringRef.current) ringRef.current.rotation.z += delta * 0.01;
     if (outerRingRef.current) outerRingRef.current.rotation.z -= delta * 0.007;
   });

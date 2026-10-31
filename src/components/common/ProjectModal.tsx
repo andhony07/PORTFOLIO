@@ -27,7 +27,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
       description={project.subtitle}
       maxWidth="xl"
     >
-      <div className="space-y-6 max-h-[75vh] overflow-y-auto pr-1">
+      <div className="space-y-6 max-h-[75vh] max-h-[70dvh] overflow-y-auto pr-1">
         {/* Status & Category Bar */}
         <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-white/10">
           <div className="flex items-center gap-2">

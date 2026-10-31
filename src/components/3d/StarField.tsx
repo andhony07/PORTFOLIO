@@ -5,7 +5,7 @@ import { usePerformance } from '../../hooks/usePerformance';
 
 export const StarField: React.FC = () => {
   const pointsRef = useRef<THREE.Points>(null);
-  const { starCount, reducedMotion } = usePerformance();
+  const { starCount, reducedMotion, isPageVisible } = usePerformance();
 
   const [positions, colors, sizes] = useMemo(() => {
     const pos = new Float32Array(starCount * 3);
@@ -52,7 +52,7 @@ export const StarField: React.FC = () => {
   }, [starCount]);
 
   useFrame((_state, delta) => {
-    if (reducedMotion || !pointsRef.current) return;
+    if (reducedMotion || !isPageVisible || !pointsRef.current) return;
     // Ultra-slow continuous axial drift (around Y and X)
     pointsRef.current.rotation.y += delta * 0.015;
     pointsRef.current.rotation.x += delta * 0.005;

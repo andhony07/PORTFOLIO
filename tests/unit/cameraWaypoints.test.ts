@@ -52,3 +52,4 @@ describe('Camera Waypoints & Trajectory Interpolation', () => {
     expect(result.target).toEqual([0.35, 0, 0]);
   });
 });
+
