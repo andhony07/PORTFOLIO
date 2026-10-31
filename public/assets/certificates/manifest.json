@@ -1,12 +1,14 @@
 {
-  "manifestVersion": "1.0.0",
+  "manifestVersion": "1.1.0",
   "description": "Asset manifest mapping verified credentials to pending high-resolution individual certificate captures.",
+  "storageDirectory": "public/assets/certificates/",
   "certificates": [
     {
       "id": "aws-bedrock",
       "title": "Prompt Engineering Best Practices for Amazon Bedrock Models",
       "issuer": "Amazon Web Services (AWS)",
       "assetStatus": "pending_upload",
+      "expectedFilename": "aws-bedrock.png",
       "imagePath": null,
       "placeholderType": "vector_hologram"
     },
@@ -15,6 +17,7 @@
       "title": "AI in Action Job Simulation",
       "issuer": "Vista / Forage",
       "assetStatus": "pending_upload",
+      "expectedFilename": "vista-forage-ai.png",
       "imagePath": null,
       "placeholderType": "vector_hologram"
     },
@@ -23,6 +26,7 @@
       "title": "GenAI Powered Data Analytics Job Simulation",
       "issuer": "Tata / Forage",
       "assetStatus": "pending_upload",
+      "expectedFilename": "tata-forage-genai.png",
       "imagePath": null,
       "placeholderType": "vector_hologram"
     },
@@ -31,6 +35,7 @@
       "title": "Data Analytics Job Simulation",
       "issuer": "Deloitte",
       "assetStatus": "pending_upload",
+      "expectedFilename": "deloitte-data-analytics.png",
       "imagePath": null,
       "placeholderType": "vector_hologram"
     },
@@ -39,6 +44,7 @@
       "title": "Technology Job Simulation",
       "issuer": "Deloitte",
       "assetStatus": "pending_upload",
+      "expectedFilename": "deloitte-technology.png",
       "imagePath": null,
       "placeholderType": "vector_hologram"
     },
@@ -47,6 +53,7 @@
       "title": "Python (Basic)",
       "issuer": "HackerRank",
       "assetStatus": "pending_upload",
+      "expectedFilename": "hackerrank-python.png",
       "imagePath": null,
       "placeholderType": "vector_hologram"
     },
@@ -55,9 +62,9 @@
       "title": "Programming in Java (Score: 88%)",
       "issuer": "NPTEL",
       "assetStatus": "pending_upload",
+      "expectedFilename": "nptel-java.png",
       "imagePath": null,
       "placeholderType": "vector_hologram"
     }
   ]
 }
-

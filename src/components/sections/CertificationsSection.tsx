@@ -3,7 +3,7 @@ import { SectionHeader } from '../common/SectionHeader';
 import { GlassPanel } from '../common/GlassPanel';
 import { Badge } from '../common/Badge';
 import { Modal } from '../common/Modal';
-import { Award, CheckCircle2, ShieldAlert } from 'lucide-react';
+import { Award, CheckCircle2, ShieldAlert, FileImage } from 'lucide-react';
 import { certificationsRegistry } from '../../data/certifications';
 import { Certification } from '../../types/portfolio';
 
@@ -54,13 +54,19 @@ export const CertificationsSection: React.FC = () => {
               </h3>
 
               {/* Vector Document Preview Thumbnail */}
-              <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-white/10 bg-space-deep/90 flex items-center justify-center p-2">
+              <div className="relative aspect-[16/10] rounded-xl overflow-hidden border border-white/10 bg-space-deep/90 flex flex-col items-center justify-center p-3 text-center">
                 <img
                   src={cert.image || '/assets/certificates/placeholder.svg'}
-                  alt={`${cert.title} credential preview`}
+                  alt={`${cert.title} preview`}
                   className="w-full h-full object-contain"
                   loading="lazy"
                 />
+              </div>
+
+              {/* Document Status Note */}
+              <div className="flex items-center gap-1.5 text-[11px] text-slate-dim font-mono">
+                <FileImage className="w-3.5 h-3.5 text-cosmic-blue shrink-0" />
+                <span>Vector placeholder emblem (Capture pending)</span>
               </div>
 
               {/* Topics Pills */}
@@ -77,7 +83,7 @@ export const CertificationsSection: React.FC = () => {
             </div>
 
             <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between text-xs text-cosmic-violet font-mono group-hover:text-white transition-colors">
-              <span>View Credential Details</span>
+              <span>Inspect Credential Details</span>
               <span>&rarr;</span>
             </div>
           </GlassPanel>
@@ -97,9 +103,19 @@ export const CertificationsSection: React.FC = () => {
             <div className="aspect-[16/10] rounded-xl overflow-hidden border border-white/10 bg-space-deep flex items-center justify-center p-4">
               <img
                 src={activeCert.image || '/assets/certificates/placeholder.svg'}
-                alt={`${activeCert.title} preview`}
+                alt={`${activeCert.title} vector placeholder`}
                 className="w-full h-full object-contain max-h-[260px]"
               />
+            </div>
+
+            <div className="p-3.5 rounded-xl bg-cosmic-blue/10 border border-cosmic-blue/30 text-blue-200 text-xs leading-relaxed flex items-start gap-2.5">
+              <ShieldAlert className="w-5 h-5 text-cosmic-blue shrink-0 mt-0.5" />
+              <div>
+                <p className="font-semibold text-white mb-0.5">Asset Status: Vector Placeholder</p>
+                <p className="text-slate-muted">
+                  This card displays a vector placeholder emblem. The original verified certificate screenshot is mapped to asset <code className="text-blue-300 font-mono">{activeCert.assetFilename || 'pending'}</code> and will be integrated upon upload of the raw certificate archive. No artificial verification URLs have been fabricated.
+                </p>
+              </div>
             </div>
 
             <div className="space-y-3">
@@ -120,21 +136,16 @@ export const CertificationsSection: React.FC = () => {
             </div>
 
             {activeCert.score && (
-              <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs font-mono">
-                Official Examination Score: <strong>{activeCert.score}</strong>
+              <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs font-mono flex items-center justify-between">
+                <span>Official NPTEL Examination Score:</span>
+                <span className="font-bold text-sm text-white px-2 py-0.5 rounded bg-amber-500/20">
+                  {activeCert.score} (Elite)
+                </span>
               </div>
             )}
-
-            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-xs text-slate-muted flex items-center gap-2">
-              <ShieldAlert className="w-4 h-4 text-slate-dim shrink-0" />
-              <span>
-                Document capture verified against student records. Individual high-res certificate export available on request.
-              </span>
-            </div>
           </div>
         </Modal>
       )}
     </section>
   );
 };
-

@@ -21,6 +21,9 @@ export interface Project {
   liveUrl: string | null;
   highlights: string[];
   metrics?: ProjectMetric[];
+  problemSolved?: string;
+  architectureDetails?: string[];
+  testingEvidence?: string;
 }
 
 export interface Certification {
@@ -32,6 +35,7 @@ export interface Certification {
   image: string | null;
   verificationUrl: string | null;
   status: 'completed';
+  assetFilename?: string; // Prepared filename mapping for upcoming certificate ZIP upload
 }
 
 export type AchievementStatus = 'participated' | 'submitted' | 'participant';
@@ -90,4 +94,3 @@ export interface DeveloperProfile {
   bio: string[];
   focusAreas: string[];
 }
-

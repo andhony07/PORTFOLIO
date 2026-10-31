@@ -3,13 +3,15 @@ import { SectionHeader } from '../common/SectionHeader';
 import { GlassPanel } from '../common/GlassPanel';
 import { Badge } from '../common/Badge';
 import { Button } from '../common/Button';
-import { ExternalLink, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { ProjectModal } from '../common/ProjectModal';
+import { ExternalLink, ShieldCheck, CheckCircle2, Info } from 'lucide-react';
 import { Github } from '../common/Icons';
 import { projectsRegistry } from '../../data/projects';
-import { ProjectCategory } from '../../types/portfolio';
+import { Project, ProjectCategory } from '../../types/portfolio';
 
 export const ProjectsSection: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<'all' | 'featured' | ProjectCategory>('all');
+  const [inspectedProject, setInspectedProject] = useState<Project | null>(null);
 
   const filteredProjects = projectsRegistry.filter((project) => {
     if (activeFilter === 'all') return true;
@@ -30,7 +32,7 @@ export const ProjectsSection: React.FC = () => {
     <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
       <SectionHeader
         tag="Project Constellation"
-        title="Engineered Systems & Applications"
+        title="Engineered Systems &amp; Applications"
         subtitle="Audited repository portfolio spanning server observability, desktop storage intelligence, distributed architectures, and AI applications."
       />
 
@@ -123,41 +125,60 @@ export const ProjectsSection: React.FC = () => {
             </div>
 
             {/* Card Actions */}
-            <div className="pt-6 mt-4 border-t border-white/10 flex items-center justify-between">
-              <a
-                href={project.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full"
-                aria-label={`View ${project.title} on GitHub (opens in new tab)`}
+            <div className="pt-6 mt-4 border-t border-white/10 flex flex-col gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                leftIcon={<Info className="w-3.5 h-3.5 text-cosmic-cyan" />}
+                onClick={() => setInspectedProject(project)}
+                className="w-full text-xs font-mono border-white/10 hover:border-cosmic-cyan/50"
               >
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  leftIcon={<Github className="w-3.5 h-3.5" />}
-                  className="w-full text-xs font-mono group-hover:border-cosmic-blue/40"
-                >
-                  View Repository
-                </Button>
-              </a>
+                Inspect Technical Architecture
+              </Button>
 
-              {project.liveUrl && (
+              <div className="flex items-center gap-2">
                 <a
-                  href={project.liveUrl}
+                  href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="ml-2"
-                  aria-label={`Open live demonstration for ${project.title}`}
+                  className="w-full"
+                  aria-label={`View ${project.title} on GitHub (opens in new tab)`}
                 >
-                  <Button variant="outline" size="sm" className="px-2.5">
-                    <ExternalLink className="w-3.5 h-3.5" />
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    leftIcon={<Github className="w-3.5 h-3.5" />}
+                    className="w-full text-xs font-mono group-hover:border-cosmic-blue/40"
+                  >
+                    View Repository
                   </Button>
                 </a>
-              )}
+
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="shrink-0"
+                    aria-label={`Open live demonstration for ${project.title}`}
+                  >
+                    <Button variant="outline" size="sm" className="px-2.5">
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </Button>
+                  </a>
+                )}
+              </div>
             </div>
           </GlassPanel>
         ))}
       </div>
+
+      {/* Deep Architecture Detail Modal */}
+      <ProjectModal
+        project={inspectedProject}
+        isOpen={!!inspectedProject}
+        onClose={() => setInspectedProject(null)}
+      />
     </section>
   );
 };

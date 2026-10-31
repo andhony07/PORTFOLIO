@@ -11,9 +11,9 @@ describe('ContactSection Component', () => {
 
   it('triggers clipboard copy when Copy Email button is clicked', () => {
     render(<ContactSection />);
-    const copyBtn = screen.getByRole('button', { name: /Copy Email/i });
+    const copyBtn = screen.getByRole('button', { name: /Copy.*Email/i });
     fireEvent.click(copyBtn);
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith('andhony78@gmail.com');
-    expect(screen.getByText(/Email Copied!/i)).toBeInTheDocument();
+    expect(screen.getByText(/Email Copied/i)).toBeInTheDocument();
   });
 });

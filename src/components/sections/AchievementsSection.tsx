@@ -2,7 +2,7 @@ import React from 'react';
 import { SectionHeader } from '../common/SectionHeader';
 import { GlassPanel } from '../common/GlassPanel';
 import { Badge } from '../common/Badge';
-import { Trophy, Calendar } from 'lucide-react';
+import { Trophy, Calendar, CheckCircle2 } from 'lucide-react';
 import { achievementsRegistry } from '../../data/achievements';
 
 export const AchievementsSection: React.FC = () => {
@@ -11,8 +11,31 @@ export const AchievementsSection: React.FC = () => {
       <SectionHeader
         tag="Engineering Challenges"
         title="Hackathons &amp; Achievements"
-        subtitle="Active participation across competitive 24-hour hackathons, algorithmic challenges, and open-source contributions."
+        subtitle="Chronological record of participation across competitive 24-hour hackathons, algorithmic engineering challenges, and open-source initiatives."
       />
+
+      {/* Verification Status Legend */}
+      <div className="flex flex-wrap items-center justify-center gap-4 mb-10 text-xs font-mono text-slate-muted">
+        <span className="text-slate-dim">Status Legend:</span>
+        <div className="flex items-center gap-1.5">
+          <Badge status="submitted" size="sm" dot>
+            Submitted
+          </Badge>
+          <span className="text-[11px] text-slate-dim">(Project Delivered)</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <Badge status="participated" size="sm" dot>
+            Participated
+          </Badge>
+          <span className="text-[11px] text-slate-dim">(Active Sprint)</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <Badge status="participant" size="sm" dot>
+            Participant
+          </Badge>
+          <span className="text-[11px] text-slate-dim">(Open Source)</span>
+        </div>
+      </div>
 
       <div className="relative border-l border-white/10 ml-4 sm:ml-8 pl-6 sm:pl-10 space-y-8">
         {achievementsRegistry.map((item) => (
@@ -50,15 +73,22 @@ export const AchievementsSection: React.FC = () => {
                 {item.description}
               </p>
 
-              <div className="flex flex-wrap gap-1.5">
-                {item.tags.map((tag, idx) => (
-                  <span
-                    key={idx}
-                    className="text-[11px] font-mono px-2 py-0.5 rounded bg-space-deep/80 border border-white/5 text-slate-light"
-                  >
-                    #{tag}
-                  </span>
-                ))}
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-white/5">
+                <div className="flex flex-wrap gap-1.5">
+                  {item.tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="text-[11px] font-mono px-2 py-0.5 rounded bg-space-deep/80 border border-white/5 text-slate-light"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-1 text-[11px] text-emerald-400 font-mono">
+                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>Verified Record</span>
+                </div>
               </div>
             </GlassPanel>
           </div>
@@ -67,4 +97,3 @@ export const AchievementsSection: React.FC = () => {
     </section>
   );
 };
-

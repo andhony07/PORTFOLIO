@@ -2,18 +2,29 @@ import React, { useState } from 'react';
 import { SectionHeader } from '../common/SectionHeader';
 import { GlassPanel } from '../common/GlassPanel';
 import { Button } from '../common/Button';
-import { Mail, Check, MapPin, Send } from 'lucide-react';
+import { Mail, Check, MapPin, Send, ExternalLink, MessageSquare, Clock } from 'lucide-react';
 import { Github, Linkedin } from '../common/Icons';
 import { developerProfile } from '../../data/profile';
 
 export const ContactSection: React.FC = () => {
   const [copied, setCopied] = useState(false);
+  const [selectedTopic, setSelectedTopic] = useState<string>('Placement & Full-Time Role');
+
+  const topics = [
+    'Placement & Full-Time Role',
+    'Technical Internship',
+    'Open Source & Project Collaboration',
+  ];
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(developerProfile.socials.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
+
+  const mailtoHref = `mailto:${developerProfile.socials.email}?subject=${encodeURIComponent(
+    `Inquiry regarding ${selectedTopic} - ${developerProfile.name}`
+  )}`;
 
   return (
     <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
@@ -25,7 +36,8 @@ export const ContactSection: React.FC = () => {
 
       <div className="max-w-3xl mx-auto">
         <GlassPanel hoverGlow glowColor="blue" className="p-8 sm:p-10 space-y-8 text-center sm:text-left">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pb-8 border-b border-white/10">
+          {/* Header Action Banner */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pb-6 border-b border-white/10">
             <div className="space-y-1">
               <h3 className="text-2xl font-bold text-white">Let&apos;s Build Something Resilient</h3>
               <p className="text-sm text-slate-muted">
@@ -33,30 +45,70 @@ export const ContactSection: React.FC = () => {
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
-              <Button
-                variant="primary"
-                leftIcon={copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Mail className="w-4 h-4" />}
-                onClick={handleCopyEmail}
-                className="text-xs"
-              >
-                {copied ? 'Email Copied!' : 'Copy Email'}
-              </Button>
-
-              <a
-                href={`mailto:${developerProfile.socials.email}?subject=Opportunity%20Inquiry%20-%20${developerProfile.name}`}
-              >
-                <Button variant="secondary" rightIcon={<Send className="w-4 h-4" />} className="text-xs">
-                  Email Me
-                </Button>
-              </a>
+            <div className="flex items-center gap-2.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-xs font-mono text-emerald-400 uppercase tracking-wider font-semibold">
+                Actively Interviewing
+              </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
+          {/* Inquiry Topic Selector */}
+          <div className="space-y-3">
+            <label className="text-xs font-mono uppercase tracking-wider text-cosmic-blue flex items-center justify-center sm:justify-start gap-1.5">
+              <MessageSquare className="w-4 h-4" />
+              <span>Select Conversation Purpose:</span>
+            </label>
+            <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+              {topics.map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => setSelectedTopic(t)}
+                  className={`text-xs px-3 py-1.5 rounded-lg font-mono transition-all duration-200 cursor-pointer ${
+                    selectedTopic === t
+                      ? 'bg-cosmic-blue text-white shadow-glow-blue border border-blue-400/50'
+                      : 'bg-space-deep/80 text-slate-muted border border-white/10 hover:text-white hover:border-white/20'
+                  }`}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Action Buttons with Email and Copy */}
+          <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+            <Button
+              variant="primary"
+              size="md"
+              leftIcon={copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Mail className="w-4 h-4" />}
+              onClick={handleCopyEmail}
+              className="w-full sm:w-auto text-xs"
+            >
+              {copied ? 'Email Copied (andhony78@gmail.com)!' : 'Copy Direct Email Address'}
+            </Button>
+
+            <a
+              href={mailtoHref}
+              className="w-full sm:w-auto"
+            >
+              <Button
+                variant="secondary"
+                size="md"
+                rightIcon={<Send className="w-4 h-4" />}
+                className="w-full sm:w-auto text-xs"
+              >
+                Launch Mail Client
+              </Button>
+            </a>
+          </div>
+
+          {/* Verified Contact Details Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 border-t border-white/10">
             <div className="space-y-1.5 text-center sm:text-left">
               <span className="text-xs font-mono uppercase tracking-wider text-slate-dim">Direct Email</span>
-              <p className="text-sm font-medium text-slate-light break-all">
+              <p className="text-sm font-medium text-slate-light break-all font-mono">
                 {developerProfile.socials.email}
               </p>
             </div>
@@ -80,6 +132,7 @@ export const ContactSection: React.FC = () => {
                 >
                   <Github className="w-4 h-4" />
                   <span>GitHub</span>
+                  <ExternalLink className="w-3 h-3 text-slate-dim" />
                 </a>
                 <a
                   href={developerProfile.socials.linkedin}
@@ -89,9 +142,16 @@ export const ContactSection: React.FC = () => {
                 >
                   <Linkedin className="w-4 h-4" />
                   <span>LinkedIn</span>
+                  <ExternalLink className="w-3 h-3 text-slate-dim" />
                 </a>
               </div>
             </div>
+          </div>
+
+          {/* Response SLA Note */}
+          <div className="flex items-center justify-center sm:justify-start gap-2 pt-2 text-xs text-slate-dim font-mono">
+            <Clock className="w-3.5 h-3.5 text-cosmic-blue" />
+            <span>Average response window: within 24 hours.</span>
           </div>
         </GlassPanel>
       </div>

@@ -1,7 +1,8 @@
 import React from 'react';
 import { SectionHeader } from '../common/SectionHeader';
 import { GlassPanel } from '../common/GlassPanel';
-import { Briefcase, BookOpen, Clock, CheckCircle } from 'lucide-react';
+import { Badge } from '../common/Badge';
+import { Briefcase, BookOpen, Clock, CheckCircle, ShieldCheck } from 'lucide-react';
 import { internshipsRegistry, workshopsRegistry } from '../../data/experience';
 
 export const ExperienceSection: React.FC = () => {
@@ -16,9 +17,14 @@ export const ExperienceSection: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Internships Column */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="flex items-center gap-2 mb-2">
-            <Briefcase className="w-5 h-5 text-cosmic-blue" />
-            <h3 className="text-xl font-bold text-white">Internship Experience</h3>
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <Briefcase className="w-5 h-5 text-cosmic-blue" />
+              <h3 className="text-xl font-bold text-white">Internship Experience</h3>
+            </div>
+            <span className="text-xs font-mono text-slate-dim">
+              Verified Student Internships
+            </span>
           </div>
 
           <div className="space-y-6">
@@ -29,17 +35,17 @@ export const ExperienceSection: React.FC = () => {
                     <h4 className="text-lg font-bold text-white">{item.role}</h4>
                     <p className="text-sm font-medium text-cosmic-blue">{item.company}</p>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 text-xs font-mono text-slate-muted bg-white/5 px-2.5 py-1 rounded-md border border-white/10 self-start sm:self-auto">
-                    <Clock className="w-3.5 h-3.5 text-cosmic-blue" />
-                    {item.duration}
-                  </span>
+                  <Badge variant="blue" size="sm" className="self-start sm:self-auto">
+                    <Clock className="w-3 h-3 text-cosmic-blue mr-1 inline" />
+                    Duration: {item.duration}
+                  </Badge>
                 </div>
 
                 <p className="text-sm text-slate-muted leading-relaxed">
                   {item.description}
                 </p>
 
-                <div className="pt-2 flex flex-wrap gap-1.5">
+                <div className="pt-2 flex flex-wrap gap-1.5 border-t border-white/5">
                   {item.skills.map((skill, i) => (
                     <span
                       key={i}
@@ -56,9 +62,14 @@ export const ExperienceSection: React.FC = () => {
 
         {/* Workshops & Continuous Learning Column */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="flex items-center gap-2 mb-2">
-            <BookOpen className="w-5 h-5 text-cosmic-violet" />
-            <h3 className="text-xl font-bold text-white">Workshops &amp; Learning</h3>
+          <div className="flex items-center justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <BookOpen className="w-5 h-5 text-cosmic-violet" />
+              <h3 className="text-xl font-bold text-white">Workshops &amp; Learning</h3>
+            </div>
+            <span className="text-xs font-mono text-slate-dim">
+              Skill Acceleration
+            </span>
           </div>
 
           <div className="space-y-6">
@@ -66,7 +77,7 @@ export const ExperienceSection: React.FC = () => {
               <GlassPanel key={workshop.id} hoverGlow glowColor="violet" className="p-6 space-y-3">
                 <div className="flex items-start justify-between gap-2">
                   <h4 className="text-base font-bold text-white">{workshop.title}</h4>
-                  <span className="text-xs font-mono text-cosmic-violet font-semibold">
+                  <span className="text-xs font-mono text-cosmic-violet font-semibold bg-cosmic-violet/10 px-2.5 py-0.5 rounded-full border border-cosmic-violet/30">
                     {workshop.organizer}
                   </span>
                 </div>
@@ -75,7 +86,7 @@ export const ExperienceSection: React.FC = () => {
                   {workshop.description}
                 </p>
 
-                <div className="pt-2 space-y-1.5">
+                <div className="pt-2 space-y-2">
                   <span className="text-xs font-mono uppercase text-slate-dim tracking-wider">
                     Topics Explored:
                   </span>
@@ -95,11 +106,12 @@ export const ExperienceSection: React.FC = () => {
             ))}
 
             <GlassPanel className="p-5 bg-gradient-to-br from-space-surface to-cosmic-blue/5 border-cosmic-blue/20">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-cosmic-blue mb-2">
-                Commitment to Verified Knowledge
-              </h4>
+              <div className="flex items-center gap-2 text-cosmic-blue mb-2 font-mono text-xs uppercase tracking-wider font-semibold">
+                <ShieldCheck className="w-4 h-4" />
+                <span>Zero Fabrication Policy</span>
+              </div>
               <p className="text-xs text-slate-muted leading-relaxed">
-                All records, codebases, and credentials in this portfolio represent genuine student coursework, submitted hackathon projects, and tested repositories without inflated metrics or unverifiable claims.
+                All records, codebases, and credentials represent genuine student coursework, submitted hackathon projects, and tested repositories without inflated metrics or unverifiable employment claims.
               </p>
             </GlassPanel>
           </div>
@@ -108,4 +120,3 @@ export const ExperienceSection: React.FC = () => {
     </section>
   );
 };
-

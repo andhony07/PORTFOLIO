@@ -40,3 +40,4 @@ describe('CameraController Math & Bounds Logic', () => {
     expect(halfway).toBe(10.5);
   });
 });
+

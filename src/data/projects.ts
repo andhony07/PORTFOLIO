@@ -12,6 +12,14 @@ export const projectsRegistry: Project[] = [
       "Architected dual-layer AI diagnostics integrating Google Gemma (gemma-4-26b-a4b-it) and local Ollama inference with deterministic rule-based instant fallback.",
       "Validated production robustness with 393 automated unit and integration tests across FastAPI REST endpoints and SQLite WAL mode storage."
     ],
+    problemSolved: "Production server outages often happen without warning due to sudden metric spikes or slow memory degradation. Traditional static threshold alerts fire too late or trigger alert fatigue with false positives. SentinelAI combines machine learning anomaly detection with explainable AI diagnostics and zero-delay fallback.",
+    architectureDetails: [
+      "Telemetry Ingestion: Background metric collectors sampling system vitals at 5-second intervals.",
+      "ML Anomaly Engine: Scikit-learn Isolation Forest model trained on multi-variate telemetry distributions for early anomaly scoring.",
+      "Diagnostic Layer: Google Gemma (gemma-4-26b-a4b-it) and Ollama local LLM with deterministic rule fallback.",
+      "Storage & UI: High-concurrency SQLite in WAL mode with dual dashboards in React 19 and Streamlit."
+    ],
+    testingEvidence: "393 passing automated unit and integration tests covering telemetry collectors, anomaly detectors, deterministic fallback paths, and API schemas.",
     category: "ai-ml",
     technologies: ["Python", "FastAPI", "React 19", "Streamlit", "Scikit-Learn", "Google Gemma", "SQLite WAL"],
     status: "completed",
@@ -41,6 +49,13 @@ export const projectsRegistry: Project[] = [
       "Features a safe staging recycle bin workflow enabling instant rollback and undo operations to prevent accidental file loss.",
       "Verified with a rigorous test suite of 108 backend tests and 16 frontend tests."
     ],
+    problemSolved: "Users running out of Windows storage frequently risk deleting critical files or struggle to locate gigabytes of hidden application caches and orphaned installers. Traditional cleaners are destructive; SpaceSentry provides transparent inspection with non-destructive staging and full undo.",
+    architectureDetails: [
+      "Windows Filesystem Scanner: Native Windows Shell API crawler for high-throughput directory size computation.",
+      "Quarantine & Safe Staging: Non-destructive deletion workflow isolating files in a recovery buffer prior to permanent purging.",
+      "Client-Server Interface: FastAPI REST backend serving a React + TypeScript interactive storage breakdown dashboard."
+    ],
+    testingEvidence: "124 passing automated tests (108 backend tests validating file safety algorithms and undo operations + 16 frontend component tests).",
     category: "systems",
     technologies: ["Python 3.12", "FastAPI", "React", "TypeScript", "Tailwind CSS", "Windows Shell API"],
     status: "completed",
@@ -70,6 +85,13 @@ export const projectsRegistry: Project[] = [
       "Configured containerized deployments using Docker and Kubernetes namespace manifests with health checks.",
       "Integrated multi-channel alerting for automated incident notifications across email and webhooks."
     ],
+    problemSolved: "Managing modern multi-cloud infrastructure requires tracking host metrics, HTTP uptime, and critical incidents across disparate dashboards without tenant-level isolation or unified mobile alerting.",
+    architectureDetails: [
+      "Backend Architecture: Multi-tenant Node.js Express API with MongoDB storage and JWT tenant scoping.",
+      "Mobile Architecture: Cross-platform Flutter client with Riverpod state management, Dio HTTP client, and FlChart graphs.",
+      "DevOps Infrastructure: Dockerized microservices and Kubernetes namespace manifests configured with readiness/liveness probes."
+    ],
+    testingEvidence: "Automated Jest test suite covering tenant security boundaries, telemetry ingestion endpoints, and incident correlation logic.",
     category: "cloud-devops",
     technologies: ["Node.js", "Express", "MongoDB", "Jest", "Docker", "Kubernetes", "Flutter", "Riverpod"],
     status: "completed",
@@ -99,6 +121,13 @@ export const projectsRegistry: Project[] = [
       "Generates exportable documentation packages in DOCX and PDF formats alongside automated Docker Compose configurations.",
       "Tested with end-to-end Playwright automation workflows."
     ],
+    problemSolved: "Architecting reliable distributed systems requires extensive trade-off analysis, formal documentation, and infrastructure boilerplate. This platform automates architecture generation, trade-off evaluation, and exportable documentation.",
+    architectureDetails: [
+      "Client Layer: React 19, Vite, Tailwind CSS, and interactive component flow interface.",
+      "AI Reasoning: Google Gemini API integration structured for architectural trade-off scoring and technology stack matching.",
+      "Document Synthesizer: Automated export engine generating formal DOCX and PDF system specifications alongside Docker Compose files."
+    ],
+    testingEvidence: "Playwright end-to-end test suite validating user specification inputs, AI generation workflows, and document download integrity.",
     category: "fullstack",
     technologies: ["React 19", "Vite", "Node.js", "Express 5", "MongoDB", "Google Gemini API", "Playwright", "Docker"],
     status: "completed",
@@ -128,6 +157,13 @@ export const projectsRegistry: Project[] = [
       "Integrated Google Gemini API for intelligent musical composition recommendations, chord progression suggestions, and production advice.",
       "Supports standard MIDI file import/export and high-fidelity WAV audio export."
     ],
+    problemSolved: "Composers and music producers often require complex desktop software for simple polyphonic ideation. MelodyForgeX brings an entire Digital Audio Workstation into the browser with real-time synthesis and AI melodic guidance.",
+    architectureDetails: [
+      "Audio Engine: Tone.js polyphonic synthesis pipelines combined with native Web Audio API audio nodes.",
+      "Sequencer & Studio: Interactive Piano Roll editor and multi-track sequencer with velocity and panning automation.",
+      "AI Assistant: Google Gemini API integration suggesting chord progressions and arrangement feedback."
+    ],
+    testingEvidence: "Audio pipeline verification, real-time node latency benchmarks, and MIDI file parsing validation.",
     category: "audio-tools",
     technologies: ["React", "TypeScript", "Vite", "Tone.js", "Web Audio API", "Zustand", "Tailwind CSS", "Gemini API"],
     status: "completed",
@@ -157,6 +193,13 @@ export const projectsRegistry: Project[] = [
       "Performs structured evidence evaluation across multiple data sources including replicas, logs, search indexes, and export archives.",
       "Outputs automated remediation plans and compliance scorecards."
     ],
+    problemSolved: "Enterprises frequently run into regulatory GDPR penalties when deletion workflows mark requests 'Complete' but leave residual records in database replicas, log attachments, or backup restores.",
+    architectureDetails: [
+      "Audit Engine: Python 3.12 evidence resolution parser scanning database snapshots, logs, and search indexes.",
+      "Intent & Identity Matcher: Resolves multi-source user identifiers across decentralized storage backends.",
+      "Remediation Synthesizer: Generates structured compliance scorecards and actionable step-by-step deletion plans."
+    ],
+    testingEvidence: "Tested across HackerRank Orchestrate competition test suites and multi-database personal data audit simulations.",
     category: "systems",
     technologies: ["Python 3.12", "Evidence Extraction", "Identity Resolution", "Audit Algorithms"],
     status: "completed",
@@ -181,6 +224,13 @@ export const projectsRegistry: Project[] = [
       "Employs a 4-tier hybrid decision engine combining deterministic algorithmic rules with a trained Random Forest classifier.",
       "Provides empirical runtime benchmarking to validate static predictions against actual execution profiles."
     ],
+    problemSolved: "Analyzing the computational complexity of code manually is error-prone for beginners and students. This laboratory tool provides instant static Big-O prediction and empirical benchmarks without executing arbitrary untrusted code directly.",
+    architectureDetails: [
+      "AST Parser: Python's built-in AST module extracting 13 structural features (loop depths, recursion markers, halving operations).",
+      "Decision Engine: 4-tier decision cascade matching deterministic structures before falling back to a trained Random Forest model.",
+      "Benchmarking Harness: Safe empirical timing runner capturing asymptotic growth curves across expanding input sizes."
+    ],
+    testingEvidence: "Validated against classical algorithms (MergeSort, QuickSort, BinarySearch, Dijkstra, Fibonacci, Matrix Multiplication).",
     category: "ai-ml",
     technologies: ["Python", "Abstract Syntax Trees (AST)", "Scikit-Learn", "Random Forest", "Benchmarking"],
     status: "completed",
@@ -204,6 +254,13 @@ export const projectsRegistry: Project[] = [
       "Planned features include eBPF-based network telemetry, distributed tracing, and automated anomaly alerting.",
       "Currently under active architectural planning and prototyping."
     ],
+    problemSolved: "Monitoring complex distributed microservices across multiple cloud regions requires high-throughput streaming telemetry without incurring excessive agent CPU overhead.",
+    architectureDetails: [
+      "Monorepo Architecture: pnpm workspace separating agent daemons, metric shared types, and time-series backends.",
+      "Ingestion Strategy: Designed for lightweight telemetry payloads and eBPF network probe integration.",
+      "Status: Actively undergoing architectural design and prototyping."
+    ],
+    testingEvidence: "Monorepo workspace package dependencies and TypeScript configuration validated.",
     category: "cloud-devops",
     technologies: ["TypeScript", "Node.js", "pnpm Workspace", "Distributed Systems"],
     status: "planned",
@@ -217,4 +274,3 @@ export const projectsRegistry: Project[] = [
     ]
   }
 ];
-

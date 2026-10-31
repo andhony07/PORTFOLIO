@@ -6,7 +6,8 @@ export const certificationsRegistry: Certification[] = [
     title: "Prompt Engineering Best Practices for Amazon Bedrock Models",
     issuer: "Amazon Web Services (AWS)",
     topics: ["Prompt Engineering", "Generative AI", "Amazon Bedrock", "Foundation Models"],
-    image: null, // Pending individual certificate image asset
+    image: null,
+    assetFilename: "aws-bedrock.png",
     verificationUrl: null, // Unverified external link omitted to avoid fabrication
     status: "completed"
   },
@@ -16,6 +17,7 @@ export const certificationsRegistry: Certification[] = [
     issuer: "Vista / Forage",
     topics: ["Artificial Intelligence", "AI Applications", "Analytical Thinking", "Problem-Solving"],
     image: null,
+    assetFilename: "vista-forage-ai.png",
     verificationUrl: null,
     status: "completed"
   },
@@ -25,6 +27,7 @@ export const certificationsRegistry: Certification[] = [
     issuer: "Tata / Forage",
     topics: ["Generative AI", "Data Analytics", "Analytical Thinking", "Problem-Solving"],
     image: null,
+    assetFilename: "tata-forage-genai.png",
     verificationUrl: null,
     status: "completed"
   },
@@ -34,6 +37,7 @@ export const certificationsRegistry: Certification[] = [
     issuer: "Deloitte",
     topics: ["Data Interpretation", "Analytical Thinking", "Problem-Solving", "Client Reporting"],
     image: null,
+    assetFilename: "deloitte-data-analytics.png",
     verificationUrl: null,
     status: "completed"
   },
@@ -43,6 +47,7 @@ export const certificationsRegistry: Certification[] = [
     issuer: "Deloitte",
     topics: ["Technology Consulting", "Problem-Solving", "Analytical Thinking", "Professional Communication"],
     image: null,
+    assetFilename: "deloitte-technology.png",
     verificationUrl: null,
     status: "completed"
   },
@@ -52,6 +57,7 @@ export const certificationsRegistry: Certification[] = [
     issuer: "HackerRank",
     topics: ["Python", "Data Types", "Strings", "Functions", "Control Flow"],
     image: null,
+    assetFilename: "hackerrank-python.png",
     verificationUrl: null,
     status: "completed"
   },
@@ -62,8 +68,8 @@ export const certificationsRegistry: Certification[] = [
     score: "88%",
     topics: ["Java Programming", "Object-Oriented Programming", "Classes & Objects", "Inheritance", "Polymorphism", "Exception Handling"],
     image: null,
+    assetFilename: "nptel-java.png",
     verificationUrl: null,
     status: "completed"
   }
 ];
-
